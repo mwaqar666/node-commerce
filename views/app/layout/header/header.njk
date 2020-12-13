@@ -2,4 +2,18 @@
     {% include "./header-top.njk" %}
 
     {% include "./header-middle.njk" %}
+
+    <!-- Search Box -->
+    <div class="overlay">
+        <div class="scale"></div>
+        <form class="search-box" action="javascript:void(0)" method="POST">
+            <input id="search-products" type="text" name="search" placeholder="Search products..."/>
+            <label for="search-products"></label>
+            <button id="close" type="submit">
+                <i class="ion-ios-search-strong"></i>
+            </button>
+        </form>
+        <button class="close"><i class="ion-android-close"></i></button>
+    </div>
+    <!-- Search Box -->
 </header>
