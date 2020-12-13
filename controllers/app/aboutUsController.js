@@ -1,3 +1,3 @@
-exports.index = (request, response) => {
-    return response.render('app/about-us');
+exports.showAbout = (request, response) => {
+    return response.render('app/pages/about-us');
 };

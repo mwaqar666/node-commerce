@@ -1,7 +1,7 @@
 exports.indexOne = (request, response) => {
-    return response.render('app/index');
+    return response.render('app/pages/index');
 };
 
 exports.indexTwo = (request, response) => {
-    return response.render('app/index-2');
+    return response.render('app/pages/index-2');
 };

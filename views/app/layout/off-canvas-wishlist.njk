@@ -1,0 +1,25 @@
+<div id="offcanvas-wishlist" class="offcanvas offcanvas-wishlist theme1">
+    <div class="inner">
+        <div class="head d-flex flex-wrap justify-content-between">
+            <span class="title">Wishlist</span>
+            <button class="offcanvas-close">×</button>
+        </div>
+        <ul class="minicart-product-list">
+            {% for times in range(5) %}
+                <li>
+                    <a href="{{ route('product-1').path }}" class="image">
+                        <img src="assets/img/mini-cart/4.png" alt="Cart product Image">
+                    </a>
+                    <div class="content">
+                        <a href="{{ route('product-1').path }}" class="title">Original Age Defying Cosmetics Makeup</a>
+                        <span class="quantity-price">1 x
+                                    <span class="amount">$100.00</span>
+                                </span>
+                        <a href="#" class="remove">×</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ route('wishlist').path }}" class="btn btn-secondary btn--lg d-block d-sm-inline-block mt-30">View Wishlist</a>
+    </div>
+</div>
