@@ -7,9 +7,5 @@ exports.productTwo = (request, response) => {
 };
 
 exports.productThree = (request, response) => {
-    return response.render('app/pages/single-product-affiliate');
-};
-
-exports.productFour = (request, response) => {
     return response.render('app/pages/single-product-group');
 };

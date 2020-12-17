@@ -31,4 +31,4 @@ app.use('/admin', adminRoutes);
 app.use(appRoutes);
 
 // Start Server at Port: 3000
-app.listen(2500);
+app.listen(3000);

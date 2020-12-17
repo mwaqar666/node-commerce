@@ -27,15 +27,11 @@ const urls = [
     { path: '/shop-2', method: 'get', name: 'shop-2', action: shopController.shopTwo },
     { path: '/shop-3', method: 'get', name: 'shop-3', action: shopController.shopThree },
     { path: '/shop-4', method: 'get', name: 'shop-4', action: shopController.shopFour },
-    { path: '/shop-5', method: 'get', name: 'shop-5', action: shopController.shopFive },
-    { path: '/shop-6', method: 'get', name: 'shop-6', action: shopController.shopSix },
-    { path: '/shop-7', method: 'get', name: 'shop-7', action: shopController.shopSeven },
 
     // Product Display
     { path: '/product-1', method: 'get', name: 'product-1', action: productController.productOne },
     { path: '/product-2', method: 'get', name: 'product-2', action: productController.productTwo },
     { path: '/product-3', method: 'get', name: 'product-3', action: productController.productThree },
-    { path: '/product-4', method: 'get', name: 'product-4', action: productController.productFour },
 
     // Blog List
     { path: '/blog-1', method: 'get', name: 'blog-1', action: blogController.blogOne },
