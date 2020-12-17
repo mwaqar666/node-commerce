@@ -1,3 +1,4 @@
+const helmet = require('helmet');
 const express = require('express');
 const nunjucks = require('nunjucks');
 const bodyParser = require('body-parser');
@@ -10,6 +11,7 @@ const routeHelper = require('./utils/routes.js');
 
 // Initiate Application
 const app = express();
+app.use(helmet());
 
 // Initiate & Configure Nunjucks
 // const env = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
