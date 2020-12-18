@@ -2,6 +2,7 @@ const helmet = require('helmet');
 const express = require('express');
 const nunjucks = require('nunjucks');
 const bodyParser = require('body-parser');
+require('./utils/database');
 
 // Routes, Utilities & Paths
 const path = require('./utils/path');
@@ -14,8 +15,6 @@ const app = express();
 app.use(helmet());
 
 // Initiate & Configure Nunjucks
-// const env = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
-// env.addGlobal('route', routeHelper);
 nunjucks.configure('views', { autoescape: true, express: app });
 app.use((request, response, next) => {
     response.locals.route = routeHelper; next();
