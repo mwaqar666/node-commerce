@@ -2,7 +2,7 @@ const helmet = require('helmet');
 const express = require('express');
 const nunjucks = require('nunjucks');
 const bodyParser = require('body-parser');
-require('./utils/database');
+const sequelize = require('./utils/database');
 
 // Routes, Utilities & Paths
 const path = require('./utils/path');
@@ -28,6 +28,15 @@ app.use(express.static(path.publicPath()));
 // Use Routes
 app.use('/admin', adminRoutes);
 app.use(appRoutes);
+
+// Synchronize Database
+sequelize.sync()/*
+    .then(response => {
+        console.log('Success: ', response);
+    })
+    .catch(error => {
+        console.log('Success: ', error);
+    })*/;
 
 // Start Server at Port: 3000
 app.listen(3000);
