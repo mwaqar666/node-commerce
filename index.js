@@ -30,13 +30,13 @@ app.use('/admin', adminRoutes);
 app.use(appRoutes);
 
 // Synchronize Database
-sequelize.sync()/*
-    .then(response => {
-        console.log('Success: ', response);
+sequelize.sync()
+    .then(result => {
+        console.log('Success: ', result);
+
+        // Start Server at Port: 3000
+        app.listen(3000);
     })
     .catch(error => {
-        console.log('Success: ', error);
-    })*/;
-
-// Start Server at Port: 3000
-app.listen(3000);
+        console.log(error);
+    });

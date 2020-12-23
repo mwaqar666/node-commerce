@@ -1,35 +1,35 @@
-const { DataTypes, Model } = require('sequelize');
+const Sequelize = require('sequelize');
 const sequelize = require('../utils/database');
 
-class Product extends Model {}
+class Product extends Sequelize.Model {}
 
 Product.init({
     id: {
-        type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true, allowNull: false,
+        type: Sequelize.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true, allowNull: false,
     },
     slug: {
-        type: DataTypes.STRING, allowNull: false, unique: true,
+        type: Sequelize.STRING, allowNull: false, unique: true,
     },
     name: {
-        type: DataTypes.STRING, allowNull: false,
+        type: Sequelize.STRING, allowNull: false,
     },
     image: {
-        type: DataTypes.STRING, allowNull: false,
+        type: Sequelize.STRING, allowNull: false,
     },
     description: {
-        type: DataTypes.TEXT, allowNull: false, defaultValue: ''
+        type: Sequelize.TEXT, allowNull: false, defaultValue: ''
     },
     height: {
-        type: DataTypes.INTEGER.UNSIGNED, allowNull: false,
+        type: Sequelize.INTEGER.UNSIGNED, allowNull: false,
     },
     width: {
-        type: DataTypes.INTEGER.UNSIGNED, allowNull: false,
+        type: Sequelize.INTEGER.UNSIGNED, allowNull: false,
     },
     length: {
-        type: DataTypes.INTEGER.UNSIGNED, allowNull: false,
+        type: Sequelize.INTEGER.UNSIGNED, allowNull: false,
     },
     weight: {
-        type: DataTypes.INTEGER.UNSIGNED, allowNull: false,
+        type: Sequelize.INTEGER.UNSIGNED, allowNull: false,
     },
 }, {
     sequelize, tableName: 'products'

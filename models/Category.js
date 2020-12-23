@@ -1,20 +1,20 @@
-const { DataTypes, Model } = require('sequelize');
+const Sequelize = require('sequelize');
 const sequelize = require('../utils/database');
 
-class Category extends Model {}
+class Category extends Sequelize.Model {}
 
 Category.init({
     id: {
-        type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true, allowNull: false,
+        type: Sequelize.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true, allowNull: false,
     },
     slug: {
-        type: DataTypes.STRING, allowNull: false, unique: true,
+        type: Sequelize.STRING, allowNull: false, unique: true,
     },
     name: {
-        type: DataTypes.STRING, allowNull: false,
+        type: Sequelize.STRING, allowNull: false,
     },
     image: {
-        type: DataTypes.STRING, allowNull: false,
+        type: Sequelize.STRING, allowNull: false,
     },
 }, {
     sequelize, tableName: 'categories'
