@@ -1,0 +1,12 @@
+@extends('errors.layout')
+
+@section('title', '403')
+
+@section('message')
+    <h5>Error 403</h5>
+    <span>Unauthorized</span>
+@stop
+
+@section('errorPicture')
+    <img class="img-fluid" src="{{ asset('assets/images/403.png') }}" alt="403" style="border-radius: 50%">
+@stop

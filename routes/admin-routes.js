@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
-// const controllerPath = require('../utils/path').controllerPath;
+const controllerPath = require('../utils/path').controllerPath;
 
 // Controllers
-// ...
+const TagController = require(controllerPath('Admin/TagController'));
+const UserController = require(controllerPath('Admin/UserController'));
+const CategoryController = require(controllerPath('Admin/CategoryController'));
+const ProductController = require(controllerPath('Admin/ProductController'));
 
 // Admin Routes...
 const urls = [

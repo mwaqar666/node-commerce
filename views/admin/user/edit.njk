@@ -1,0 +1,84 @@
+@extends('admin.layout.master')
+
+@section('title', $title)
+
+@section('parentPageTitle', $parentPageTitle)
+
+@section('page-style')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.css') }}">
+@stop
+
+@section('content')
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        <strong>{{ $parentPageTitle }}</strong> {{ $title }}
+                    </h2>
+                    <ul class="header-dropdown">
+                        <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="javascript:void(0)">Reset Fields</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="remove">
+                            <a role="button" class="boxs-close">
+                                <i class="zmdi zmdi-close"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <form action="{{ route('admin.user.update', $user->id) }}" method="POST">
+                        @csrf @method('PATCH')
+                        <h2 class="card-inside-title">User Name</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input id="user-first-name-edit" type="text" class="form-control" name="first_name" value="{{ old('first_name') ?? $user->first_name }}" placeholder="First Name"/>
+                                    @error('first_name') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input id="user-middle-name-edit" type="text" class="form-control" name="middle_name" value="{{ old('middle_name') ?? $user->middle_name }}" placeholder="Middle Name"/>
+                                    @error('middle_name') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input id="user-last-name-edit" type="text" class="form-control" name="last_name" value="{{ old('last_name') ?? $user->last_name }}" placeholder="Last Name"/>
+                                    @error('last_name') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-inside-title">User E-Mail</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input id="user-email-edit" type="email" class="form-control" name="email" value="{{ old('email') ?? $user->email }}" placeholder="E-Mail"/>
+                                    @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-inside-title">User Assigned Roles</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <select name="roles[]" class="form-control show-tick" data-live-search="true" multiple>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}" @if ($user->roles->contains($role)) selected @endif>{{ $role->role }}</option>
+                                    @endforeach
+                                </select>
+                                @error('roles') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+                        </div>
+                        <button class="mt-3 btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Update {{ $parentPageTitle }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop

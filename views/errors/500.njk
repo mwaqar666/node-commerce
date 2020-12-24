@@ -1,0 +1,12 @@
+@extends('admin.layout.authentication')
+
+@section('title', '500')
+
+@section('message')
+    <h5>Error 500</h5>
+    <span>Something's broken :-(</span>
+@stop
+
+@section('errorPicture')
+    <img class="img-fluid" src="{{ asset('assets/images/signin.svg') }}" alt="500"/>
+@stop

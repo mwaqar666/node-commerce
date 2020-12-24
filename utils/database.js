@@ -4,6 +4,4 @@ const sequelize = new Sequelize('node-commerce', 'root', '', {
     dialect: 'mysql',
 });
 
-require(require('./path').modelPath('User'));
-
 module.exports = sequelize;

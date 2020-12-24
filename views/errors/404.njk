@@ -1,0 +1,12 @@
+@extends('admin.layout.authentication')
+
+@section('title', '404')
+
+@section('message')
+    <h5>Error 404</h5>
+    <span>Page not found</span>
+@stop
+
+@section('errorPicture')
+    <img class="img-fluid" src="{{asset('assets/images/404.svg')}}" alt="404"/>
+@stop

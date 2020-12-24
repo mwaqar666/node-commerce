@@ -8,9 +8,9 @@ const constructPath = directoryPath => {
 
 const viewsPath = (view = '') => constructPath(path.join('views', view));
 const publicPath = (file = '') => constructPath(path.join('public', file));
-const modelPath = (model = '') => constructPath(path.join('models', model));
+const modelPath = (model = '') => constructPath(path.join('Models', model));
 const routePath = (route = '') => constructPath(path.join('routes', route));
-const controllerPath = (controller = '') => constructPath(path.join('controllers', controller));
+const controllerPath = (controller = '') => constructPath(path.join('Controllers', controller));
 
 exports.viewsPath = viewsPath;
 exports.modelPath = modelPath;

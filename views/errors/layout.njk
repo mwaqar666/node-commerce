@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
+        <title>@yield('title') - {{ config('app.name') }}</title>
+        <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+    </head>
+    <body class="{{ $adminPanelConfigs }}">
+        <div class="authentication">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                        <form class="card auth_form">
+                            <div class="header">
+                                <img class="logo" src="{{ asset('assets/images/logo.svg') }}" alt>
+                                @yield('message')
+                            </div>
+                            <div class="body">
+                                <a href="{{ route('admin.dashboard.index') }}" class="btn btn-primary btn-block waves-effect waves-light">GO TO HOMEPAGE</a>
+                            </div>
+                        </form>
+                        <div class="copyright text-center">
+                            &copy; {{ config('app.name') }} {{ date('Y') }}
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-sm-12">
+                        <div class="card">
+                            @yield('errorPicture')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

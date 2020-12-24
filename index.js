@@ -30,7 +30,7 @@ app.use('/admin', adminRoutes);
 app.use(appRoutes);
 
 // Synchronize Database
-sequelize.sync()
+sequelize.sync({ force: true })
     .then(result => {
         console.log('Success: ', result);
 

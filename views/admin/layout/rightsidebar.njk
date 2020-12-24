@@ -1,0 +1,209 @@
+<aside id="rightsidebar" class="right-sidebar">
+    <ul class="nav nav-tabs sm">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#setting">
+                <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#chat">
+                <i class="zmdi zmdi-comments"></i>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="setting">
+            <div class="slim_scroll">
+                <div class="card">
+                    <h6>Theme Option</h6>
+                    <div class="light_dark">
+                        <div class="radio">
+                            <input
+                                    type="radio" name="radio1" id="lighttheme" value
+                                    @if (strpos($adminPanelConfigs, 'theme-dark') === false) checked @endif
+                                    onclick="configurePanelTheme('primary_theme', null)"
+                            >
+                            <label for="lighttheme">Light Mode</label>
+                        </div>
+                        <div class="radio mb-0">
+                            <input
+                                    type="radio" name="radio1" id="darktheme" value="dark"
+                                    @if (strpos($adminPanelConfigs, 'theme-dark') !== false) checked @endif
+                                    onclick="configurePanelTheme('primary_theme', 'theme-dark')"
+                            >
+                            <label for="darktheme">Dark Mode</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h6>Color Skins</h6>
+                    <ul class="choose-skin list-unstyled">
+                        <li
+                                data-theme="purple" onclick="configurePanelTheme('secondary_theme', 'theme-purple')"
+                                @if (strpos($adminPanelConfigs, 'theme-purple') !== false) class="active" @endif
+                        >
+                            <div class="purple"></div>
+                        </li>
+                        <li
+                                data-theme="blue" onclick="configurePanelTheme('secondary_theme', 'theme-blue')"
+                                @if (strpos($adminPanelConfigs, 'theme-blue') !== false) class="active" @endif
+                        >
+                            <div class="blue"></div>
+                        </li>
+                        <li
+                                data-theme="cyan" onclick="configurePanelTheme('secondary_theme', 'theme-cyan')"
+                                @if (strpos($adminPanelConfigs, 'theme-cyan') !== false) class="active" @endif
+                        >
+                            <div class="cyan"></div>
+                        </li>
+                        <li
+                                data-theme="green" onclick="configurePanelTheme('secondary_theme', 'theme-green')"
+                                @if (strpos($adminPanelConfigs, 'theme-green') !== false) class="active" @endif
+                        >
+                            <div class="green"></div>
+                        </li>
+                        <li
+                                data-theme="orange" onclick="configurePanelTheme('secondary_theme', 'theme-orange')"
+                                @if (strpos($adminPanelConfigs, 'theme-orange') !== false) class="active" @endif
+                        >
+                            <div class="orange"></div>
+                        </li>
+                        <li
+                                data-theme="blush" onclick="configurePanelTheme('secondary_theme', 'theme-blush')"
+                                @if (strpos($adminPanelConfigs, 'theme-blush') !== false) class="active" @endif
+                        >
+                            <div class="blush"></div>
+                        </li>
+                    </ul>                                        
+                </div>
+                <div class="card">
+                    <h6>General Settings</h6>
+                    <ul class="setting-list list-unstyled">
+                        <li>
+                            <div class="checkbox rtl_support">
+                                <input id="checkbox1" type="checkbox" value="rtl">
+                                <label for="checkbox1">RTL Version</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox ms_bar">
+                                <input id="checkbox2" type="checkbox" value="ls-toggle-menu">
+                                <label for="checkbox2">Mini Sidebar</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>                
+            </div>                
+        </div>       
+        <div class="tab-pane right_chat" id="chat">
+            <div class="slim_scroll">
+                <div class="card">
+                    <ul class="list-unstyled">
+                        <li class="online">
+                            <a href="javascript:void(0)">
+                                <div class="media">
+                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar4.jpg') }}" alt="">
+                                    <div class="media-body">
+                                        <span class="name">Sophia
+                                            <small class="float-right">11:00AM</small>
+                                        </span>
+                                        <span class="message">There are many variations of passages of Lorem Ipsum available</span>
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>                            
+                        </li>
+                        <li class="online">
+                            <a href="javascript:void(0)">
+                                <div class="media">
+                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar5.jpg') }}" alt="">
+                                    <div class="media-body">
+                                        <span class="name">Grayson
+                                            <small class="float-right">11:30AM</small>
+                                        </span>
+                                        <span class="message">All the Lorem Ipsum generators on the</span>
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>                            
+                        </li>
+                        <li class="offline">
+                            <a href="javascript:void(0)">
+                                <div class="media">
+                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar2.jpg') }}" alt="">
+                                    <div class="media-body">
+                                        <span class="name">Isabella
+                                            <small class="float-right">11:31AM</small>
+                                        </span>
+                                        <span class="message">Contrary to popular belief, Lorem Ipsum</span>
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>                            
+                        </li>
+                        <li class="me">
+                            <a href="javascript:void(0)">
+                                <div class="media">
+                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar1.jpg') }}" alt="">
+                                    <div class="media-body">
+                                        <span class="name">John
+                                            <small class="float-right">05:00PM</small>
+                                        </span>
+                                        <span class="message">It is a long established fact that a reader</span>
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>                            
+                        </li>
+                        <li class="online">
+                            <a href="javascript:void(0)">
+                                <div class="media">
+                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar3.jpg') }}" alt="">
+                                    <div class="media-body">
+                                        <span class="name">Alexander
+                                            <small class="float-right">06:08PM</small>
+                                        </span>
+                                        <span class="message">Richard McClintock, a Latin professor</span>
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>                            
+                        </li>                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+@push('after-scripts')
+    <script src="{{ asset('assets/plugins/axios/axios.min.js') }}"></script>
+    <script>
+        const changeSetting = theme => {
+            const itemsToAffectSelectors = ['.js-exportable', '#product-attributes', '#view-table', '.c_table', '.role-table'];
+            itemsToAffectSelectors.forEach(itemSelector => {
+                const item = document.querySelector(itemSelector);
+                if (item) {
+                    item.style.transition = 'color 0.35s ease';
+                    item.style.color = theme === 'theme-dark' ? '#c2bdbd' : '#212529';
+                }
+            });
+        };
+
+        const configurePanelTheme = (setting, value) => {
+            const data = new FormData();
+            data.append('_method', 'PATCH');
+            data.append('setting', setting);
+            data.append('value', value);
+            axios.post(`{{ route('admin.configuration.update', auth()->user()->id) }}`, data, {
+                headers: { 'X-CSRF-TOKEN': document.querySelector(`meta[name="csrf-token"]`).getAttribute('content') }
+            }).then(({ status }) => {
+                if (status === 200 && setting === 'primary_theme') {
+                    changeSetting(value);
+                }
+            });
+        };
+
+        changeSetting('{{ strpos($adminPanelConfigs, 'theme-dark') !== false ? 'theme-dark' : '' }}');
+    </script>
+@endpush

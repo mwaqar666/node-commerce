@@ -1,0 +1,104 @@
+@extends('admin.layout.master')
+
+@section('title', $title)
+
+@section('parentPageTitle', $parentPageTitle)
+
+@section('page-style')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert/sweetalert.css') }}"/>
+@stop
+
+@section('content')
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        <strong>{{ $parentPageTitle }}</strong> {{ $title }}
+                    </h2>
+                    <ul class="header-dropdown">
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-more"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right slideUp">
+                                <li>
+                                    <a href="{{ route('admin.role.create') }}">Create</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="remove">
+                            <a role="button" class="boxs-close">
+                                <i class="zmdi zmdi-close"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped dataTable js-exportable" style="color: black">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($roles as $index => $role)
+                                    <tr data-record-id="{{ $role->id }}">
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $role->role }}</td>
+                                        <td>
+                                            @can('accessTo', ['update', 'Role'])
+                                                <a href="{{ route('admin.role.edit', $role->id) }}" class="btn btn-primary btn-icon btn-icon-mini btn-round" data-edit>
+                                                    <i class="zmdi zmdi-edit"></i>
+                                                </a>
+                                            @endcan
+                                            @can('accessTo', ['delete', 'Role'])
+                                                @if (!in_array($role->role, ['Admin', 'Customer'], true))
+                                                    <a href="javascript:void(0)" class="btn btn-danger btn-icon btn-icon-mini btn-round" onclick="deleteRecord({{ $role->id }}, '{{ route('admin.role.delete', $role->id) }}')">
+                                                        <i class="zmdi zmdi-delete"></i>
+                                                    </a>
+                                                @endif
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('page-script')
+    <script src="{{ asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.pdf.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/axios/axios.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/tables/jquery-datatable.js') }}"></script>
+
+    @if (session()->has('flashMessage'))
+        <script>
+            success('{{ session('flashMessage') }}');
+        </script>
+    @endif
+
+@stop

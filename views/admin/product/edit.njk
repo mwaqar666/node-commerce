@@ -1,0 +1,200 @@
+@extends('admin.layout.master')
+
+@section('title', $title)
+
+@section('parentPageTitle', $parentPageTitle)
+
+@section('page-style')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/dist/summernote.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/dropify/css/dropify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/light-gallery/css/lightgallery.css') }}">
+    <style>
+        .note-editor {
+            border-radius: 0.25rem;
+        }
+    </style>
+@stop
+
+@section('content')
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        <strong> {{ $parentPageTitle }}</strong> {{ $title }}
+                    </h2>
+                    <ul class="header-dropdown">
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-more"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="javascript:void(0)" onclick="$('#edit-product').trigger('reset')">Reset Form</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="remove">
+                            <a role="button" class="boxs-close">
+                                <i class="zmdi zmdi-close"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <form id="edit-product" method="POST" action="{{ route('admin.product.update', $product->id) }}" enctype="multipart/form-data">
+                        @csrf @method('PATCH')
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" id="name" value="{{ old('name') ?? $product->name }}" placeholder="Product Name" required>
+                                    @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="length" id="length" value="{{ old('length') ?? $product->length }}" min="0" step="0.01" placeholder="Product Length" required>
+                                    @error('length') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="width" id="width" value="{{ old('width') ?? $product->width }}" min="0" step="0.01" placeholder="Product Width" required>
+                                    @error('width') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="height" id="height" value="{{ old('height') ?? $product->height }}" min="0" step="0.01" placeholder="Product Height" required>
+                                    @error('height') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="weight" id="weight" value="{{ old('weight') ?? $product->weight }}" min="0" step="0.01" placeholder="Product Weight" required>
+                                    @error('weight') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="regular_price" id="regular_price" value="{{ old('regular_price') ?? $product->regular_price }}" min="0" step="0.01" placeholder="Regular Price" required>
+                                    @error('regular_price') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="discount_price" id="discount_price" value="{{ old('discount_price') ?? $product->discount_price }}" min="0" step="0.01" placeholder="Discount Price (If any)">
+                                    @error('discount_price') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="quantity" id="quantity" value="{{ old('quantity') ?? $product->quantity }}" min="1" placeholder="Quantity" required>
+                                    @error('quantity') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <input
+                                                id="featured" name="featured"
+                                                value="true" type="checkbox"
+                                                @if (old('featured') === true)
+                                                    checked
+                                                @elseif ($product->featured === true)
+                                                    checked
+                                                @endif
+                                        >
+                                        <label for="featured">Featured</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <input
+                                                id="sale" name="sale"
+                                                value="true" type="checkbox"
+                                                @if (old('sale') === true)
+                                                    checked
+                                                @elseif ($product->sale === true)
+                                                    checked
+                                                @endif
+                                        >
+                                        <label for="sale">Sale</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <input
+                                                id="status" name="status"
+                                                value="true" type="checkbox"
+                                                @if (old('status') === true)
+                                                    checked
+                                                @elseif ($product->status === true)
+                                                    checked
+                                                @endif
+                                        >
+                                        <label for="status">Status</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group" id="old-image-preview">
+                                    <a href="{{ asset($product->image) }}">
+                                        <img class="img-fluid" src="{{ asset($product->image) }}" alt>
+                                        <input type="hidden" name="image" value="{{ $product->image }}">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="file" class="dropify" name="image" multiple data-allowed-file-extensions="jpg jpeg png gif bmp svg webp" data-max-file-size="1000K"> <!-- For Default File: data-default-file="default file path" -->
+                                    @error('image') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <textarea class="summernote" name="description" id="description" placeholder="Product Description">{{ old('description') ?? $product->description }}</textarea>
+                                    @error('description') <small class="text-danger">{{ $message }}</small> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Update {{ $parentPageTitle }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('page-script')
+    <script src="{{ asset('assets/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/summernote/dist/summernote.js') }}"></script>
+    <script src="{{ asset('assets/plugins/dropify/js/dropify.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/light-gallery/js/lightgallery-all.min.js') }}"></script>
+    <script>
+        $('.select2').select2();
+        $('.dropify').dropify({
+            messages: {
+                default: 'Upload Main Picture of Product. Max Size: 1MB, Supported File Types: jpeg, png, gif, bmp, svg, webp',
+            },
+        });
+        $('#old-image-preview').lightGallery({ thumbnail: true, selector: 'a' });
+    </script>
+@stop
