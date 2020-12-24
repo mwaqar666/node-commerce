@@ -1,48 +1,59 @@
-@extends('admin.layout.authentication')
-@section('title', 'Register')
-@section('content')
+{% extends '../layout/authentication.njk' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
     <div class="row">
         <div class="col-lg-4 col-sm-12">
             <form class="card auth_form">
                 <div class="header">
-                    <img class="logo" src="{{asset('assets/images/logo.svg')}}" alt="">
+                    <img class="logo" src="app/img/logo/logo.png" alt="">
                     <h5>Sign Up</h5>
                     <span>Register a new membership</span>
                 </div>
                 <div class="body">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" id="username" class="form-control" placeholder="Username">
+                        <label for="username"></label>
                         <div class="input-group-append">
-                            <span class="input-group-text"><i class="zmdi zmdi-account-circle"></i></span>
+                            <span class="input-group-text">
+                                <i class="zmdi zmdi-account-circle"></i>
+                            </span>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Enter Email">
+                        <input type="text" id="email" class="form-control" placeholder="Enter Email">
+                        <label for="email"></label>
                         <div class="input-group-append">
-                            <span class="input-group-text"><i class="zmdi zmdi-email"></i></span>
+                            <span class="input-group-text">
+                                <i class="zmdi zmdi-email"></i>
+                            </span>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Password">
+                        <input type="text" id="password" class="form-control" placeholder="Password">
+                        <label for="password"></label>
                         <div class="input-group-append">
-                            <span class="input-group-text"><i class="zmdi zmdi-lock"></i></span>
+                            <span class="input-group-text">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
                         </div>
                     </div>
                     <div class="checkbox">
                         <input id="remember_me" type="checkbox">
-                        <label for="remember_me">I read and agree to the <a href="javascript:void(0);">terms of usage</a></label>
+                        <label for="remember_me">I read and agree to the <a href="javascript:void(0)">terms of usage</a></label>
                     </div>
-                    <a href="{{route('dashboard.index')}}" class="btn btn-primary btn-block waves-effect waves-light">SIGN UP</a>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-block waves-effect waves-light">SIGN UP</a>
                     <div class="signin_with mt-3">
-                        <a class="link" href="{{route('authentication.login')}}">You already have a membership?</a>
+                        <a class="link" href="javascript:void(0)">You already have a membership?</a>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-lg-8 col-sm-12">
             <div class="card">
-                <img src="{{asset('assets/images/signup.svg')}}" alt="Sign Up"/>
+                <img src="admin/images/signup.svg" alt="Sign Up">
             </div>
         </div>
     </div>
-@stop
+{% endblock %}

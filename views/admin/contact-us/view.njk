@@ -1,41 +1,41 @@
-@extends('admin.layout.master')
+{% extends '../layout/master.njk' %}
 
-@section('title', $title)
+{% block title %}View{% endblock %}
 
-@section('parentPageTitle', $parentPageTitle)
+{% block parentPageTitle %}Contact Us{% endblock %}
 
-@section('content')
+{% block content %}
     <div class="row clearfix">
         <div class="col-lg-12">
             <div class="card">
                 <div class="header">
                     <h2>
-                        <strong>{{ $parentPageTitle }}</strong> {{ $title }}
+                        <strong>Contact Us</strong> View
                     </h2>
                 </div>
                 <div class="body">
                     <div>
                         <h5>Name</h5>
-                        <p>{{ $customerInquiry->name }}</p>
+                        <p>Name</p>
                     </div>
                     <div>
                         <h5>E-Mail</h5>
-                        <p>{{ $customerInquiry->email }}</p>
+                        <p>E-Mail</p>
                     </div>
                     <div>
                         <h5>Phone</h5>
-                        <p>{{ $customerInquiry->phone }}</p>
+                        <p>Phone</p>
                     </div>
                     <div>
                         <h5>Message</h5>
-                        <p>{{ $customerInquiry->message }}</p>
+                        <p>Message</p>
                     </div>
                     <div>
                         <h5>Inquiry Date</h5>
-                        <p>{{ $customerInquiry->created_at->toDateString() }}</p>
+                        <p>Inquiry Date</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@stop
+{% endblock %}

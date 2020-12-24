@@ -1,26 +1,25 @@
-@extends('admin.layout.authentication')
+{% extends '../layout/authentication.njk' %}
 
-@section('title', 'Login')
+{% block title %}Login{% endblock %}
 
-@section('content')
+{% block content %}
     <div class="row">
         <div class="col-lg-4 col-sm-12">
-            <form class="card auth_form" method="POST" action="{{ route('login') }}">
-                @csrf
+            <form class="card auth_form" method="POST" action="javascript:void(0)">
                 <div class="header">
-                    <img class="logo" src="{{ asset('images/logo.png') }}" alt="">
+                    <img class="logo" src="app/img/logo/logo.png" alt="">
                     <h5>Log in</h5>
                 </div>
                 <div class="body">
                     <div class="input-group mb-3">
                         <label for="email"></label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="E-Mail" {{ old('email') }} style="color: white">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="E-Mail" style="color: white">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="zmdi zmdi-account-circle"></i>
                             </span>
                         </div>
-                        @error('email') <small class="text-danger" style="display: contents">{{ $message }}</small> @enderror
+                        <!-- <small class="text-danger" style="display: contents">Error Message Here</small> -->
                     </div>
                     <div class="input-group mb-3">
                         <label for="password"></label>
@@ -30,7 +29,7 @@
                                 <i class="zmdi zmdi-lock"></i>
                             </span>
                         </div>
-                        @error('password') <small class="text-danger" style="display: contents">{{ $message }}</small> @enderror
+                        <!-- <small class="text-danger" style="display: contents">Error Message Here</small> -->
                     </div>
                     <div class="checkbox">
                         <input id="remember_me" type="checkbox">
@@ -42,8 +41,8 @@
         </div>
         <div class="col-lg-8 col-sm-12">
             <div class="card">
-                <img src="{{ asset('assets/images/signin.svg') }}" alt="Sign In"/>
+                <img src="admin/images/signin.svg" alt="Sign In">
             </div>
         </div>
     </div>
-@stop
+{% endblock %}

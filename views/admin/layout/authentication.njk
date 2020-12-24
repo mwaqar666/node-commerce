@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
-        <title>@yield('title') - {{ config('app.name') }}</title>
-        <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+        <!-- <meta name="csrf-token" content="some-dummy-csrf"> -->
+        <link rel="shortcut icon" type="image/x-icon" href="app/img/favicon.ico">
+        <title>{% block title %}E - Commerce{% endblock %}</title>
+        <link rel="stylesheet" href="admin/plugins/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="admin/css/style.min.css">
     </head>
-    <body class="{{ $adminPanelConfigs }}">
+    <body class="theme-dark">
         <div class="authentication">
             <div class="container">
-                @yield('content')
+                {% block content %}{% endblock %}
             </div>
         </div>
     </body>

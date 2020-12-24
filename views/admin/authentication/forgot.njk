@@ -1,13 +1,13 @@
 {% extends '../layout/authentication.njk' %}
 
-{% block title %} Forget Password {% endblock %}
+{% block title %}Forget Password{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-lg-4 col-sm-12">
             <form class="card auth_form">
                 <div class="header">
-                    <img class="logo" src="{{ asset('assets/images/logo.svg') }}" alt="">
+                    <img class="logo" src="app/img/logo/logo.png" alt="">
                     <h5>Forgot Password?</h5>
                     <span>Enter your e-mail address below to reset your password.</span>
                 </div>
@@ -18,13 +18,13 @@
                             <span class="input-group-text"><i class="zmdi zmdi-email"></i></span>
                         </div>
                     </div>
-                    <a href="{{ route('dashboard.index') }}" class="btn btn-primary btn-block waves-effect waves-light">SUBMIT</a>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-block waves-effect waves-light">SUBMIT</a>
                 </div>
             </form>
         </div>
         <div class="col-lg-8 col-sm-12">
             <div class="card">
-                <img src="{{ asset('assets/images/signin.svg') }}" alt="Forgot Password"/>
+                <img src="admin/images/signin.svg" alt="Forgot Password">
             </div>
         </div>
     </div>
