@@ -18,19 +18,11 @@
                     <h6>Theme Option</h6>
                     <div class="light_dark">
                         <div class="radio">
-                            <input
-                                    type="radio" name="radio1" id="lighttheme" value
-                                    @if (strpos($adminPanelConfigs, 'theme-dark') === false) checked @endif
-                                    onclick="configurePanelTheme('primary_theme', null)"
-                            >
+                            <input type="radio" name="radio1" id="lighttheme" value checked onclick="configurePanelTheme('primary_theme', null)">
                             <label for="lighttheme">Light Mode</label>
                         </div>
                         <div class="radio mb-0">
-                            <input
-                                    type="radio" name="radio1" id="darktheme" value="dark"
-                                    @if (strpos($adminPanelConfigs, 'theme-dark') !== false) checked @endif
-                                    onclick="configurePanelTheme('primary_theme', 'theme-dark')"
-                            >
+                            <input type="radio" name="radio1" id="darktheme" value="dark" checked onclick="configurePanelTheme('primary_theme', 'theme-dark')">
                             <label for="darktheme">Dark Mode</label>
                         </div>
                     </div>
@@ -38,40 +30,22 @@
                 <div class="card">
                     <h6>Color Skins</h6>
                     <ul class="choose-skin list-unstyled">
-                        <li
-                                data-theme="purple" onclick="configurePanelTheme('secondary_theme', 'theme-purple')"
-                                @if (strpos($adminPanelConfigs, 'theme-purple') !== false) class="active" @endif
-                        >
+                        <li data-theme="purple" onclick="configurePanelTheme('secondary_theme', 'theme-purple')" class="active">
                             <div class="purple"></div>
                         </li>
-                        <li
-                                data-theme="blue" onclick="configurePanelTheme('secondary_theme', 'theme-blue')"
-                                @if (strpos($adminPanelConfigs, 'theme-blue') !== false) class="active" @endif
-                        >
+                        <li data-theme="blue" onclick="configurePanelTheme('secondary_theme', 'theme-blue')">
                             <div class="blue"></div>
                         </li>
-                        <li
-                                data-theme="cyan" onclick="configurePanelTheme('secondary_theme', 'theme-cyan')"
-                                @if (strpos($adminPanelConfigs, 'theme-cyan') !== false) class="active" @endif
-                        >
+                        <li data-theme="cyan" onclick="configurePanelTheme('secondary_theme', 'theme-cyan')">
                             <div class="cyan"></div>
                         </li>
-                        <li
-                                data-theme="green" onclick="configurePanelTheme('secondary_theme', 'theme-green')"
-                                @if (strpos($adminPanelConfigs, 'theme-green') !== false) class="active" @endif
-                        >
+                        <li data-theme="green" onclick="configurePanelTheme('secondary_theme', 'theme-green')">
                             <div class="green"></div>
                         </li>
-                        <li
-                                data-theme="orange" onclick="configurePanelTheme('secondary_theme', 'theme-orange')"
-                                @if (strpos($adminPanelConfigs, 'theme-orange') !== false) class="active" @endif
-                        >
+                        <li data-theme="orange" onclick="configurePanelTheme('secondary_theme', 'theme-orange')">
                             <div class="orange"></div>
                         </li>
-                        <li
-                                data-theme="blush" onclick="configurePanelTheme('secondary_theme', 'theme-blush')"
-                                @if (strpos($adminPanelConfigs, 'theme-blush') !== false) class="active" @endif
-                        >
+                        <li data-theme="blush" onclick="configurePanelTheme('secondary_theme', 'theme-blush')">
                             <div class="blush"></div>
                         </li>
                     </ul>                                        
@@ -102,7 +76,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar4.jpg') }}" alt="">
+                                    <img class="media-object" src="admin/images/xs/avatar4.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Sophia
                                             <small class="float-right">11:00AM</small>
@@ -116,7 +90,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar5.jpg') }}" alt="">
+                                    <img class="media-object" src="admin/images/xs/avatar5.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Grayson
                                             <small class="float-right">11:30AM</small>
@@ -130,7 +104,7 @@
                         <li class="offline">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar2.jpg') }}" alt="">
+                                    <img class="media-object" src="admin/images/xs/avatar2.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Isabella
                                             <small class="float-right">11:31AM</small>
@@ -144,7 +118,7 @@
                         <li class="me">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar1.jpg') }}" alt="">
+                                    <img class="media-object" src="admin/images/xs/avatar1.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">John
                                             <small class="float-right">05:00PM</small>
@@ -158,7 +132,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="{{ asset('assets/images/xs/avatar3.jpg') }}" alt="">
+                                    <img class="media-object" src="admin/images/xs/avatar3.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Alexander
                                             <small class="float-right">06:08PM</small>
@@ -176,8 +150,8 @@
     </div>
 </aside>
 
-@push('after-scripts')
-    <script src="{{ asset('assets/plugins/axios/axios.min.js') }}"></script>
+{% block afterScripts %}
+    <script src="admin/plugins/axios/axios.min.js"></script>
     <script>
         const changeSetting = theme => {
             const itemsToAffectSelectors = ['.js-exportable', '#product-attributes', '#view-table', '.c_table', '.role-table'];
@@ -195,7 +169,7 @@
             data.append('_method', 'PATCH');
             data.append('setting', setting);
             data.append('value', value);
-            axios.post(`{{ route('admin.configuration.update', auth()->user()->id) }}`, data, {
+            axios.post(void(0), data, {
                 headers: { 'X-CSRF-TOKEN': document.querySelector(`meta[name="csrf-token"]`).getAttribute('content') }
             }).then(({ status }) => {
                 if (status === 200 && setting === 'primary_theme') {
@@ -204,6 +178,6 @@
             });
         };
 
-        changeSetting('{{ strpos($adminPanelConfigs, 'theme-dark') !== false ? 'theme-dark' : '' }}');
+        changeSetting('theme-dark');
     </script>
-@endpush
+{% endblock %}

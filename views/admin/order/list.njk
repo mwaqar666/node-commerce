@@ -1,22 +1,22 @@
-@extends('admin.layout.master')
+{% extends "../layout/master.njk" %}
 
-@section('title', $title)
+{% block title %}List{% endblock %}
 
-@section('parentPageTitle', $parentPageTitle)
+{% block parentPageTitle %}Order{% endblock %}
 
-@section('page-style')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert/sweetalert.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.css') }}"/>
-@stop
+{% block pageStyle %}
+    <link rel="stylesheet" href="admin/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="admin/plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="admin/plugins/bootstrap-select/css/bootstrap-select.css">
+{% endblock %}
 
-@section('content')
+{% block content %}
     <div class="row clearfix">
         <div class="col-lg-12">
             <div class="card">
                 <div class="header">
                     <h2>
-                        <strong>{{ $parentPageTitle }}</strong> {{ $title }}
+                        <strong>Order</strong> List
                     </h2>
                     <ul class="header-dropdown">
                         <li class="remove">
@@ -30,96 +30,82 @@
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped dataTable js-exportable" style="color: black">
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Order ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Additional Brief</th>
-                                <th>Street Address</th>
-                                <th>Zip Code</th>
-                                <th>City</th>
-                                <th>State</th>
-                                <th>Country</th>
-                                <th>Order Amount</th>
-                                <th>Shipping Amount</th>
-                                <th>Total Amount</th>
-                                <th>Order Date</th>
-                                <th>Order Status</th>
-                                <th>Actions</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Order ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Additional Brief</th>
+                                    <th>Street Address</th>
+                                    <th>Zip Code</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Order Amount</th>
+                                    <th>Shipping Amount</th>
+                                    <th>Total Amount</th>
+                                    <th>Order Date</th>
+                                    <th>Order Status</th>
+                                    <th>Actions</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach ($orders as $index => $order)
-                                <tr data-record-id="{{ $order->id }}">
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $order->id }}</td>
-                                    <td>{{ $order->first_name }}</td>
-                                    <td>{{ $order->last_name }}</td>
-                                    <td>{{ $order->email }}</td>
-                                    <td>{{ $order->phone }}</td>
-                                    <td>{{ $order->additional_brief }}</td>
-                                    <td>{{ $order->street_address }}</td>
-                                    <td>{{ $order->zip_code }}</td>
-                                    <td>{{ $order->city }}</td>
-                                    <td>{{ $order->state }}</td>
-                                    <td>{{ $order->country }}</td>
-                                    <td>$ {{ $order->subTotal }}</td>
-                                    <td>$ {{ $order->shipping }}</td>
-                                    <td>$ {{ $order->total }}</td>
-                                    <td>{{ $order->created_at->toDateString() }}</td>
+                                <tr data-record-id="1">
+                                    <td>#</td>
+                                    <td>Order ID</td>
+                                    <td>First Name</td>
+                                    <td>Last Name</td>
+                                    <td>Email</td>
+                                    <td>Phone</td>
+                                    <td>Additional Brief</td>
+                                    <td>Street Address</td>
+                                    <td>Zip Code</td>
+                                    <td>City</td>
+                                    <td>State</td>
+                                    <td>Country</td>
+                                    <td>Order Amount</td>
+                                    <td>Shipping Amount</td>
+                                    <td>Total Amount</td>
+                                    <td>Order Date</td>
                                     <td>
-                                        <form action="{{ route('admin.order.change-status', $order->id) }}" method="POST" id="order-status-{{ $order->id }}">
-                                            @csrf @method('PATCH')
+                                        <form action="javascript:void(0)" method="POST" id="order-status-1">
                                             <label>
-                                                <select class="form-control" name="order_status" onchange="document.getElementById('order-status-{{ $order->id }}').submit()">
-                                                    @foreach ($orderStatuses as $orderStatus)
-                                                        <option
-                                                            value="{{ $orderStatus->id }}"
-                                                            @if ($order->orderStatus->id === $orderStatus->id) selected @endif
-                                                        >
-                                                            {{ $orderStatus->order_status }}
-                                                        </option>
-                                                    @endforeach
+                                                <select class="form-control" name="order_status" onchange="document.getElementById('order-status-1').submit()">
+                                                    <option value="{{ $orderStatus->id }}" selected>Paid</option>
                                                 </select>
                                             </label>
                                         </form>
                                     </td>
                                     <td>
-                                        @can('accessTo', ['view', 'Orders'])
-                                            <a href="{{ route('admin.order.view', $order->id) }}" class="btn btn-success btn-icon btn-icon-mini btn-round" data-view>
-                                                <i class="zmdi zmdi-eye"></i>
-                                            </a>
-                                        @endcan
-                                        @can('accessTo', ['delete', 'Orders'])
-                                            <a href="javascript:void(0)" class="btn btn-danger btn-icon btn-icon-mini btn-round" onclick="deleteRecord({{ $order->id }}, '{{ route('admin.order.delete', $order->id) }}')">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </a>
-                                        @endcan
+                                        <a href="javascript:void(0)" class="btn btn-success btn-icon btn-icon-mini btn-round" data-view>
+                                            <i class="zmdi zmdi-eye"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" class="btn btn-danger btn-icon btn-icon-mini btn-round" onclick="void(0)">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </a>
                                     </td>
                                 </tr>
-                            @endforeach
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <th>#</th>
-                                <th>Order ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Additional Brief</th>
-                                <th>Street Address</th>
-                                <th>Town City</th>
-                                <th>Zip Code</th>
-                                <th>State</th>
-                                <th>Country</th>
-                                <th>Total Amount</th>
-                                <th>Order Date</th>
-                                <th>Actions</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Order ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Additional Brief</th>
+                                    <th>Street Address</th>
+                                    <th>Town City</th>
+                                    <th>Zip Code</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Total Amount</th>
+                                    <th>Order Date</th>
+                                    <th>Actions</th>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -127,25 +113,22 @@
             </div>
         </div>
     </div>
-@stop
+{% endblock %}
 
-@section('page-script')
-    <script src="{{ asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.pdf.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/axios/axios.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/tables/jquery-datatable.js') }}"></script>
+{% block pageScript %}
+    <script src="admin/bundles/datatablescripts.bundle.js"></script>
+    <script src="admin/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="admin/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="admin/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="admin/plugins/jquery-datatable/buttons/buttons.flash.min.js"></script>
+    <script src="admin/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="admin/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+    <script src="admin/plugins/jquery-datatable/buttons/buttons.pdf.min.js"></script>
+    <script src="admin/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="admin/plugins/axios/axios.min.js"></script>
+    <script src="admin/js/pages/tables/jquery-datatable.js"></script>
 
-    @if (session()->has('flashMessage'))
-        <script>
-            success('{{ session('flashMessage') }}');
-        </script>
-    @endif
-
-@stop
+    <script>
+        success('Message');
+    </script>
+{% endblock %}

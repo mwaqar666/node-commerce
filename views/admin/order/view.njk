@@ -1,39 +1,39 @@
-@extends('admin.layout.master')
+{% extends '../layout/master.njk' %}
 
-@section('title', $title)
+{% block title %}View{% endblock %}
 
-@section('parentPageTitle', $parentPageTitle)
+{% block parentPageTitle %}Order{% endblock %}
 
-@section('page-style')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert/sweetalert.css') }}"/>
-@stop
+{% block pageStyle %}
+    <link rel="stylesheet" href="admin/plugins/bootstrap-select/css/bootstrap-select.css">
+    <link rel="stylesheet" href="admin/plugins/sweetalert/sweetalert.css">
+{% endblock %}
 
-@section('content')
+{% block content %}
     <div class="row clearfix">
         <div class="col-lg-12">
             <div class="card">
                 <div class="header">
                     <h2>
-                        <strong>{{ $parentPageTitle }}</strong> {{ $title }}
+                        <strong>Order</strong> View
                     </h2>
                 </div>
                 <div class="body">
                     <h5>
-                        <strong>Order ID: </strong> #{{ str_pad($order->id, 6, 0, STR_PAD_LEFT) }}
+                        <strong>Order ID: </strong> #000000
                     </h5>
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <address>
-                                <strong>{{ $order->customer->full_name ?? 'Guest Customer' }}</strong>
+                                <strong>Guest Customer</strong>
                                 <br>
-                                {{ $order->street_address }}, {{ $order->town_city }}, {{ $order->state }} {{ $order->zip_code }}, {{ $order->country }}
+                                street_address, town_city, state zip_code, country
                                 <br>
-                                <abbr title="Phone">P:</abbr> {{ $order->phone }}
+                                <abbr title="Phone">P:</abbr> phone
                             </address>
                         </div>
                         <div class="col-md-6 col-sm-6 text-right">
-                            <p class="mb-0"><strong>Order Date: </strong> {{ $order->created_at }}</p>
+                            <p class="mb-0"><strong>Order Date: </strong> created_at</p>
                         </div>
                     </div>
                 </div>
@@ -55,35 +55,23 @@
                                         <th>Image</th>
                                         <th>Quantity</th>
                                         <th>Subtotal</th>
-                                        <th>Label</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($order->orderedProducts as $index => $orderedProduct)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $orderedProduct->pivot->product_id }}</td>
-                                            <td>{{ $orderedProduct->pivot->name }}</td>
-                                            <td>{{ $orderedProduct->pivot->length }} in</td>
-                                            <td>{{ $orderedProduct->pivot->width }} in</td>
-                                            <td>{{ $orderedProduct->pivot->height }} in</td>
-                                            <td>{{ $orderedProduct->pivot->weight }} lb</td>
-                                            <td>${{ $orderedProduct->pivot->regular_price }}</td>
-                                            <td>${{ $orderedProduct->pivot->discount_price }}</td>
-                                            <td>
-                                                <img src="{{ asset($orderedProduct->pivot->image) }}" alt="{{ $orderedProduct->pivot->name }}">
-                                            </td>
-                                            <td>{{ $orderedProduct->pivot->purchased_quantity }}</td>
-                                            <td>${{ ($orderedProduct->pivot->discount_price === 0.00 ? $orderedProduct->pivot->regular_price : $orderedProduct->pivot->discount_price) * $orderedProduct->pivot->purchased_quantity }}</td>
-                                            <td>
-                                                @if ($orderedProduct->pivot->label)
-                                                    <a href="{{ asset($orderedProduct->pivot->label) }}" download>Download Label</a>
-                                                @else
-                                                    <button type="submit" class="btn" onclick="generateLabel(event, '{{ route('admin.generate-label', ['order' => $order->id, 'orderedProduct' => $orderedProduct->pivot->id]) }}')">Generate Label</button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    <tr>
+                                        <td>#</td>
+                                        <td>Product ID</td>
+                                        <td>Name</td>
+                                        <td>Lengtd</td>
+                                        <td>Widtd</td>
+                                        <td>Height</td>
+                                        <td>Weight</td>
+                                        <td>Regular Price</td>
+                                        <td>Discount Price</td>
+                                        <td>Image</td>
+                                        <td>Quantity</td>
+                                        <td>Subtotal</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -94,57 +82,39 @@
                         <div class="col-md-6"></div>
                         <div class="col-md-6 text-right">
                             <ul class="list-unstyled">
-                                <form action="{{ route('admin.order.change-status', $order->id) }}" method="POST" id="order-status-{{ $order->id }}">
-                                    @csrf @method('PATCH')
-                                    <label>
-                                        <select class="form-control" name="order_status" onchange="document.getElementById('order-status-{{ $order->id }}').submit()">
-                                            @foreach ($orderStatuses as $orderStatus)
-                                                <option
-                                                        value="{{ $orderStatus->id }}"
-                                                        @if ($order->orderStatus->id === $orderStatus->id) selected @endif
-                                                >
-                                                    {{ $orderStatus->order_status }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </label>
-                                </form>
-                                <li class="text-info">
-                                    <p style="font-size: large">Sub-Total: <strong>${{ $order->subTotal }}</strong></p>
+                                <li>
+                                    <form action="javascript:void(0)" method="POST" id="order-status-1">
+                                        <label>
+                                            <select class="form-control" name="order_status" onchange="document.getElementById('order-status-1').submit()">
+                                                <option value="1" selected>Paid</option>
+                                            </select>
+                                        </label>
+                                    </form>
                                 </li>
                                 <li class="text-info">
-                                    <p style="font-size: large">Shipping: <strong>${{ $order->shipping }}</strong></p>
+                                    <p style="font-size: large">Sub-Total: <strong>subTotal</strong></p>
+                                </li>
+                                <li class="text-info">
+                                    <p style="font-size: large">Shipping: <strong>shipping</strong></p>
                                 </li>
                             </ul>
-                            <h3 class="mb-0 text-success">Total: ${{ $order->total }}</h3>
+                            <h3 class="mb-0 text-success">Total: total</h3>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@stop
+{% endblock %}
 
-@section('page-script')
-    <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/axios/axios.min.js') }}"></script>
+{% block pageScript %}
+    <script src="admin/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="admin/plugins/axios/axios.min.js"></script>
     <script>
-        const generateLabel = (event, labelGenerationURL) => {
-            event.target.disabled = true;
-            axios.patch(labelGenerationURL).then(({ data: { label } }) => {
-                event.target.parentElement.innerHTML = `
-                    <a href="{{ asset('') }}${label}">Download Label</a>
-                `;
-            });
-        }
+        const success = message => {
+            swal('Operation Successful', message, 'success');
+        };
 
-        @if (session()->has('flashMessage'))
-
-            const success = message => {
-                swal('Operation Successful', message, 'success');
-            };
-
-            success('{{ session('flashMessage') }}');
-        @endif
+        success('Message');
     </script>
-@stop
+{% endblock %}
