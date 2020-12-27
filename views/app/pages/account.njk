@@ -14,7 +14,7 @@
                 <div class="col-12">
                     <ol class="breadcrumb bg-transparent m-0 p-0 align-items-center justify-content-center">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home-1') }}">Home</a>
+                            <a href="{{ route('app.home-1') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">My Account</li>
                     </ol>
@@ -52,7 +52,7 @@
                         <a href="#account-info" data-toggle="tab" class="active">
                             <i class="fa fa-user"></i> Account Details
                         </a>
-                        <a href="{{ route('home-1') }}">
+                        <a href="{{ route('app.home-1') }}">
                             <i class="fa fa-sign-out"></i>Logout
                         </a>
                     </div>
@@ -69,7 +69,7 @@
                                 <div class="welcome mb-20">
                                     <p>
                                         Hello, <strong>Alex Taylor</strong> (If Not<strong>Taylor !</strong>
-                                        <a href="{{ route('home-1') }}" class="logout"> Logout</a>)
+                                        <a href="{{ route('app.home-1') }}" class="logout"> Logout</a>)
                                     </p>
                                 </div>
                                 <p class="mb-0">
@@ -106,7 +106,7 @@
                                                 <td>Pending</td>
                                                 <td>$45</td>
                                                 <td>
-                                                    <a href="{{ route('product-1') }}" class="ht-btn black-btn">View</a>
+                                                    <a href="{{ route('app.product-1') }}" class="ht-btn black-btn">View</a>
                                                 </td>
                                             </tr>
                                         {% endfor %}

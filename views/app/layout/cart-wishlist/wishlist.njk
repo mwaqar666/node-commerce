@@ -7,11 +7,11 @@
         <ul class="minicart-product-list">
             {% for times in range(5) %}
                 <li>
-                    <a href="{{ route('product-1').path }}" class="image">
+                    <a href="{{ route('app.product-1').path }}" class="image">
                         <img src="app/img/mini-cart/4.png" alt="Cart product Image">
                     </a>
                     <div class="content">
-                        <a href="{{ route('product-1').path }}" class="title">Original Age Defying Cosmetics Makeup</a>
+                        <a href="{{ route('app.product-1').path }}" class="title">Original Age Defying Cosmetics Makeup</a>
                         <span class="quantity-price">1 x
                                     <span class="amount">$100.00</span>
                                 </span>
@@ -20,6 +20,6 @@
                 </li>
             {% endfor %}
         </ul>
-        <a href="{{ route('wishlist').path }}" class="btn btn-secondary btn--lg d-block d-sm-inline-block mt-30">View Wishlist</a>
+        <a href="{{ route('app.wishlist').path }}" class="btn btn-secondary btn--lg d-block d-sm-inline-block mt-30">View Wishlist</a>
     </div>
 </div>

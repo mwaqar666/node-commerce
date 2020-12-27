@@ -7,11 +7,11 @@
         <ul class="minicart-product-list">
             {% for times in range(5) %}
                 <li>
-                    <a href="{{ route('product-1').path }}" class="image">
+                    <a href="{{ route('app.product-1').path }}" class="image">
                         <img src="app/img/mini-cart/1.png" alt="Cart product Image">
                     </a>
                     <div class="content">
-                        <a href="{{ route('product-1').path }}" class="title">Original Age Defying Cosmetics Makeup</a>
+                        <a href="{{ route('app.product-1').path }}" class="title">Original Age Defying Cosmetics Makeup</a>
                         <span class="quantity-price">1 x
                                     <span class="amount">$100.00</span>
                                 </span>
@@ -24,8 +24,8 @@
             <strong>Subtotal :</strong>
             <span class="amount">$144.00</span>
         </div>
-        <a href="{{ route('cart').path }}" class="btn btn-secondary btn--lg d-block d-sm-inline-block mr-sm-2">View Cart</a>
-        <a href="{{ route('checkout').path }}" class="btn btn-dark btn--lg d-block d-sm-inline-block mt-4 mt-sm-0">Checkout</a>
+        <a href="{{ route('app.cart').path }}" class="btn btn-secondary btn--lg d-block d-sm-inline-block mr-sm-2">View Cart</a>
+        <a href="{{ route('app.checkout').path }}" class="btn btn-dark btn--lg d-block d-sm-inline-block mt-4 mt-sm-0">Checkout</a>
         <p class="minicart-message">Free Shipping on All Orders Over $100!</p>
     </div>
 </div>
