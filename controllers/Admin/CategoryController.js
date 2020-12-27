@@ -1,2 +1,2 @@
-const modelPath = require('../../utils/path').modelPath;
+const modelPath = pathGenerator.modelPath;
 const Category = require(modelPath('Category'));

@@ -1,8 +1,4 @@
-const routePath = require('./path').routePath;
-const appUrls = require(routePath('app-routes')).urls;
-const adminUrls = require(routePath('admin-routes')).urls;
-const allRoutes = [ ...appUrls, ...adminUrls ];
-
+const routes = require(pathGenerator.routePath('routing')).routes;
 
 /*
  * =========================================================================
@@ -25,7 +21,10 @@ const applyParameters = (path, routeParams, queryParams) => {
     }
 
     // Check If Required Route Parameter Remains Unfilled
-    const notMatchedParameter = path.substring(path.indexOf(':') + 1, path.indexOf('/', path.indexOf(':')) === -1 ? path.length : path.indexOf('/', path.indexOf(':')));
+    const notMatchedParameter = path.substring(
+        path.indexOf(':') + 1, path.indexOf('/', path.indexOf(':')) === -1 ? path.length : path.indexOf('/', path.indexOf(':'))
+    );
+
     if (notMatchedParameter) {
         throw new Error(`Route parameter ':${notMatchedParameter}' is undefined`);
     }
@@ -65,8 +64,8 @@ const getQueryParams = URL => {
  * If no route is found then an error will be thrown
  * ===================================================
  */
-module.exports = route = (name, routeParams = {}, queryParams = {}) => {
-    let requiredRoute = { ...allRoutes.find(inspectedRoute => inspectedRoute.name === name) };
+exports.route = (name, routeParams = {}, queryParams = {}) => {
+    let requiredRoute = { ...routes.find(inspectedRoute => inspectedRoute.name === name) };
     if (Object.keys(requiredRoute).length) {
         requiredRoute.path = applyParameters(requiredRoute.path, routeParams, queryParams);
         return requiredRoute;

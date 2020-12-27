@@ -18,11 +18,11 @@
                     <h6>Theme Option</h6>
                     <div class="light_dark">
                         <div class="radio">
-                            <input type="radio" name="radio1" id="lighttheme" value checked onclick="configurePanelTheme('primary_theme', null)">
+                            <input type="radio" name="radio1" id="lighttheme" value checked onclick="configurePanelTheme('primary_theme', null)" nonce>
                             <label for="lighttheme">Light Mode</label>
                         </div>
                         <div class="radio mb-0">
-                            <input type="radio" name="radio1" id="darktheme" value="dark" checked onclick="configurePanelTheme('primary_theme', 'theme-dark')">
+                            <input type="radio" name="radio1" id="darktheme" value="dark" checked onclick="configurePanelTheme('primary_theme', 'theme-dark')" nonce>
                             <label for="darktheme">Dark Mode</label>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="admin/images/xs/avatar4.jpg" alt="">
+                                    <img class="media-object" src="images/xs/avatar4.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Sophia
                                             <small class="float-right">11:00AM</small>
@@ -90,7 +90,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="admin/images/xs/avatar5.jpg" alt="">
+                                    <img class="media-object" src="images/xs/avatar5.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Grayson
                                             <small class="float-right">11:30AM</small>
@@ -104,7 +104,7 @@
                         <li class="offline">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="admin/images/xs/avatar2.jpg" alt="">
+                                    <img class="media-object" src="images/xs/avatar2.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Isabella
                                             <small class="float-right">11:31AM</small>
@@ -118,7 +118,7 @@
                         <li class="me">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="admin/images/xs/avatar1.jpg" alt="">
+                                    <img class="media-object" src="images/xs/avatar1.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">John
                                             <small class="float-right">05:00PM</small>
@@ -132,7 +132,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="admin/images/xs/avatar3.jpg" alt="">
+                                    <img class="media-object" src="images/xs/avatar3.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Alexander
                                             <small class="float-right">06:08PM</small>
@@ -150,34 +150,7 @@
     </div>
 </aside>
 
-{% block afterScripts %}
-    <script src="admin/plugins/axios/axios.min.js"></script>
-    <script>
-        const changeSetting = theme => {
-            const itemsToAffectSelectors = ['.js-exportable', '#product-attributes', '#view-table', '.c_table', '.role-table'];
-            itemsToAffectSelectors.forEach(itemSelector => {
-                const item = document.querySelector(itemSelector);
-                if (item) {
-                    item.style.transition = 'color 0.35s ease';
-                    item.style.color = theme === 'theme-dark' ? '#c2bdbd' : '#212529';
-                }
-            });
-        };
-
-        const configurePanelTheme = (setting, value) => {
-            const data = new FormData();
-            data.append('_method', 'PATCH');
-            data.append('setting', setting);
-            data.append('value', value);
-            axios.post(void(0), data, {
-                headers: { 'X-CSRF-TOKEN': document.querySelector(`meta[name="csrf-token"]`).getAttribute('content') }
-            }).then(({ status }) => {
-                if (status === 200 && setting === 'primary_theme') {
-                    changeSetting(value);
-                }
-            });
-        };
-
-        changeSetting('theme-dark');
-    </script>
+{% block sideBarScript %}
+    <script src="plugins/axios/axios.min.js"></script>
+    <script src="js/pages/rightsidebar.js"></script>
 {% endblock %}

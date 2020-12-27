@@ -5,30 +5,31 @@
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <!-- <meta name="csrf-token" content="some-dummy-token"> -->
-        <link rel="shortcut icon" type="image/x-icon" href="app/img/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 
-        <title>
-            {% block parentPageTitle %}{% endblock %}
-            {% block title %}{% endblock%}
-        </title>
+        <title>E - Commerce Admin</title>
 
         {% block meta %}{% endblock %}
 
-        {% block beforeStyles %}{% endblock %}
-
-        <link rel="stylesheet" href="admin/plugins/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
 
         {% block pageStyle %}{% endblock %}
 
-        <link rel="stylesheet" href="admin/css/style.min.css">
-
-        {% block afterStyles %}{% endblock %}
+        <link rel="stylesheet" href="css/style.min.css">
     </head>
     <body class="theme-dark">
+        {% set breadcrumbTitle %}
+            {% block title %}{% endblock %}
+        {% endset %}
+
+        {% set breadcrumbParentPageTitle %}
+            {% block parentPageTitle %}{% endblock %}
+        {% endset %}
+
         <div class="page-loader-wrapper">
             <div class="loader">
                 <div class="m-t-30">
-                    <img class="zmdi-hc-spin" src="app/img/logo/logo.png" width="48" height="48" alt="Aero">
+                    <img class="zmdi-hc-spin" src="images/logo.png" width="48" height="48" alt="Aero">
                 </div>
                 <p>Please wait...</p>        
             </div>
@@ -50,12 +51,14 @@
                                     <i class="zmdi zmdi-home"></i> E-Commerce
                                 </a>
                             </li>
-                            {% if this.parentPageTitle %}
-                                <li class="breadcrumb-item">{% block parentPageTitle %}{% endblock %}</li>
+                            {% if breadcrumbTitle %}
+                                {{ breadcrumbTitle | dump }}
                             {% endif %}
-                            {% if this.title %}
-                                <li class="breadcrumb-item active">{% block title %}{% endblock%}</li>
+                            {% if breadcrumbParentPageTitle %}
+                                {{ breadcrumbParentPageTitle | dump }}
                             {% endif %}
+                            <li class="breadcrumb-item">{% block parentPageTitle %}{% endblock %}</li>
+                            <li class="breadcrumb-item active">{#{% block title %}{% endblock%}#}</li>
                         </ul>
                         <button class="btn btn-primary btn-icon mobile_menu" type="button">
                             <i class="zmdi zmdi-sort-amount-desc"></i>
@@ -73,16 +76,12 @@
             </div>
         </section>
 
-        {% block modal %}{% endblock %}
-
-        {% block beforeScripts %}{% endblock %}
-
-        <script src="admin/bundles/libscripts.bundle.js"></script>
-        <script src="admin/bundles/vendorscripts.bundle.js"></script>
-        <script src="admin/bundles/mainscripts.bundle.js"></script>
+        <script src="bundles/libscripts.bundle.js"></script>
+        <script src="bundles/vendorscripts.bundle.js"></script>
+        <script src="bundles/mainscripts.bundle.js"></script>
 
         {% block pageScript %}{% endblock %}
 
-        {% block afterScripts %}{% endblock %}
+        {% block sideBarScript %}{% endblock %}
     </body>
 </html>

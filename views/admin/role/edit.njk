@@ -1,109 +1,99 @@
-@extends('admin.layout.master')
+<!--suppress HtmlFormInputWithoutLabel -->
+{% extends '../layout/master.njk' %}
 
-@section('title', $title)
+{% block title %}Edit{% endblock %}
 
-@section('parentPageTitle', $parentPageTitle)
+{% block parentPageTitle %}Role{% endblock %}
 
-@section('content')
+{% block content %}
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="header">
                     <h2>
-                        <strong> {{ $parentPageTitle }}</strong> {{ $title }}
+                        <strong>Role</strong> Edit
                     </h2>
                 </div>
                 <div class="body">
-                    <form action="{{ route('admin.role.update', $role->id) }}" method="POST">
-                        @csrf @method('PATCH')
+                    <form action="javascript:void(0)" method="POST">
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="role" id="role" value="{{ old('role') ?? $role->role }}" placeholder="Role" required>
-                                    @error('role') <small class="text-danger">{{ $message }}</small> @enderror
+                                    <input type="text" class="form-control" name="role" id="role" placeholder="Role" required>
+                                    <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped role-table" style="color: black">
                                 <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Resource</th>
-                                    <th>Create</th>
-                                    <th>View</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Resource</th>
+                                        <th>Create</th>
+                                        <th>View</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($role->resources as $index => $resource)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $resource->resource }}</td>
+                                        <td>1</td>
+                                        <td>resource</td>
                                         <td>
-                                            <input name="permissions[{{ $resource->id }}][create]" value="0" type="hidden">
-                                            @if (!in_array($resource->resource, ['Admin Panel', 'Orders', 'Contact Us', 'Users'], true))
-                                                <div class="form-group">
-                                                    <div class="checkbox">
-                                                        <input id="permission-{{ Str::kebab($resource->resource) }}-create" name="permissions[{{ $resource->id }}][create]" value="1" type="checkbox" @if (old("permissions[$resource->id][create]") ?? $resource->pivot->create) checked @endif>
-                                                        <label for="permission-{{ Str::kebab($resource->resource) }}-create"></label>
-                                                    </div>
+                                            <input name="permissions[1][create]" value="0" type="hidden">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input id="permission-resource-create" name="permissions[1][create]" value="1" type="checkbox" checked>
+                                                    <label for="permission-resource-create"></label>
                                                 </div>
-                                            @endif
+                                            </div>
                                         </td>
                                         <td>
-                                            <input name="permissions[{{ $resource->id }}][view]" value="0" type="hidden">
-                                            @if (!in_array($resource->resource, [], true))
-                                                <div class="form-group">
-                                                    <div class="checkbox">
-                                                        <input id="permission-{{ Str::kebab($resource->resource) }}-view" name="permissions[{{ $resource->id }}][view]" value="1" type="checkbox" @if (old("permissions[$resource->id][view]") ?? $resource->pivot->view) checked @endif>
-                                                        <label for="permission-{{ Str::kebab($resource->resource) }}-view"></label>
-                                                    </div>
+                                            <input name="permissions[1][view]" value="0" type="hidden">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input id="permission-resource-view" name="permissions[1][view]" value="1" type="checkbox" checked>
+                                                    <label for="permission-resource-view"></label>
                                                 </div>
-                                            @endif
+                                            </div>
                                         </td>
                                         <td>
-                                            <input name="permissions[{{ $resource->id }}][update]" value="0" type="hidden">
-                                            @if (!in_array($resource->resource, ['Admin Panel', 'Orders', 'Contact Us'], true))
-                                                <div class="form-group">
-                                                    <div class="checkbox">
-                                                        <input id="permission-{{ Str::kebab($resource->resource) }}-update" name="permissions[{{ $resource->id }}][update]" value="1" type="checkbox" @if (old("permissions[$resource->id][update]") ?? $resource->pivot->update) checked @endif>
-                                                        <label for="permission-{{ Str::kebab($resource->resource) }}-update"></label>
-                                                    </div>
+                                            <input name="permissions[1][update]" value="0" type="hidden">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input id="permission-resource-update" name="permissions[1][update]" value="1" type="checkbox" checked>
+                                                    <label for="permission-resource-update"></label>
                                                 </div>
-                                            @endif
+                                            </div>
                                         </td>
                                         <td>
-                                            <input name="permissions[{{ $resource->id }}][delete]" value="0" type="hidden">
-                                            @if (!in_array($resource->resource, ['Admin Panel', 'Terms & Conditions', 'Privacy Policy', 'Cookies Policy'], true))
-                                                <div class="form-group">
-                                                    <div class="checkbox">
-                                                        <input id="permission-{{ Str::kebab($resource->resource) }}-delete" name="permissions[{{ $resource->id }}][delete]" value="1" type="checkbox" @if (old("permissions[$resource->id][delete]") ?? $resource->pivot->delete) checked @endif>
-                                                        <label for="permission-{{ Str::kebab($resource->resource) }}-delete"></label>
-                                                    </div>
+                                            <input name="permissions[1][delete]" value="0" type="hidden">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input id="permission-resource-delete" name="permissions[1][delete]" value="1" type="checkbox" checked>
+                                                    <label for="permission-resource-delete"></label>
                                                 </div>
-                                            @endif
+                                            </div>
                                         </td>
                                     </tr>
-                                @endforeach
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Resource</th>
-                                    <th>Create</th>
-                                    <th>View</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Resource</th>
+                                        <th>Create</th>
+                                        <th>View</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
-                        <button class="btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Update {{ $parentPageTitle }}</button>
+                        <button class="btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Update Role</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-@stop
+{% endblock %}

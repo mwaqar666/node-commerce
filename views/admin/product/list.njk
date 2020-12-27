@@ -1,21 +1,21 @@
-@extends('admin.layout.master')
+{% extends '../layout/master.njk' %}
 
-@section('title', $title)
+{% block title %}List{% endblock %}
 
-@section('parentPageTitle', $parentPageTitle)
+{% block parentPageTitle %}Product{% endblock %}
 
-@section('page-style')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert/sweetalert.css') }}"/>
-@stop
+{% block pageStyle %}
+    <link rel="stylesheet" href="plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/sweetalert/sweetalert.css">
+{% endblock %}
 
-@section('content')
+{% block content %}
     <div class="row clearfix">
         <div class="col-lg-12">
             <div class="card">
                 <div class="header">
                     <h2>
-                        <strong>{{ $parentPageTitle }}</strong> {{ $title }}
+                        <strong>Product</strong> List
                     </h2>
                     <ul class="header-dropdown">
                         <li class="dropdown">
@@ -24,7 +24,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right slideUp">
                                 <li>
-                                    <a href="{{ route('admin.product.create') }}">Create</a>
+                                    <a href="javascript:void(0)">Create</a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0)">Another action</a>
@@ -45,69 +45,61 @@
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped dataTable js-exportable" style="color: black">
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Product ID</th>
-                                <th>Name</th>
-                                <th>Regular Price</th>
-                                <th>Discount Price</th>
-                                <th>Quantity</th>
-                                <th>Image</th>
-                                <th>Featured</th>
-                                <th>Sale</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product ID</th>
+                                    <th>Name</th>
+                                    <th>Regular Price</th>
+                                    <th>Discount Price</th>
+                                    <th>Quantity</th>
+                                    <th>Image</th>
+                                    <th>Featured</th>
+                                    <th>Sale</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach ($products as $index => $product)
                                 <tr data-record-id="{{ $product->id }}">
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $product->id }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>$ {{ $product->regular_price }}</td>
-                                    <td>$ {{ $product->discount_price }}</td>
-                                    <td>{{ $product->quantity }}</td>
+                                    <td>#</td>
+                                    <td>Product ID</td>
+                                    <td>Name</td>
+                                    <td>Regular Price</td>
+                                    <td>Discount Price</td>
+                                    <td>Quantity</td>
                                     <td>
-                                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                                        <img src="javascript:void(0)" alt="image">
                                     </td>
-                                    <td>@if ($product->featured) Featured @endif</td>
-                                    <td>@if ($product->sale) Sale @endif</td>
-                                    <td>@if ($product->status) Active @else Deactive @endif</td>
+                                    <td>Featured</td>
+                                    <td>Sale</td>
+                                    <td>Status</td>
                                     <td>
-                                        @can('accessTo', ['view', 'Products'])
-                                            <a href="{{ route('admin.product.view', $product->id) }}" class="btn btn-success btn-icon btn-icon-mini btn-round" data-view>
-                                                <i class="zmdi zmdi-eye"></i>
-                                            </a>
-                                        @endcan
-                                        @can('accessTo', ['update', 'Products'])
-                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-primary btn-icon btn-icon-mini btn-round" data-edit>
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </a>
-                                        @endcan
-                                        @can('accessTo', ['delete', 'Products'])
-                                            <a href="javascript:void(0)" class="btn btn-danger btn-icon btn-icon-mini btn-round" onclick="deleteRecord({{ $product->id }}, '{{ route('admin.product.delete', $product->id) }}')">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </a>
-                                        @endcan
+                                        <a href="javascript:void(0)" class="btn btn-success btn-icon btn-icon-mini btn-round" data-view>
+                                            <i class="zmdi zmdi-eye"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" class="btn btn-primary btn-icon btn-icon-mini btn-round" data-edit>
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" class="btn btn-danger btn-icon btn-icon-mini btn-round" onclick="void(0)">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </a>
                                     </td>
                                 </tr>
-                            @endforeach
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <th>#</th>
-                                <th>Product ID</th>
-                                <th>Name</th>
-                                <th>Regular Price</th>
-                                <th>Discount Price</th>
-                                <th>Quantity</th>
-                                <th>Image</th>
-                                <th>Featured</th>
-                                <th>Sale</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product ID</th>
+                                    <th>Name</th>
+                                    <th>Regular Price</th>
+                                    <th>Discount Price</th>
+                                    <th>Quantity</th>
+                                    <th>Image</th>
+                                    <th>Featured</th>
+                                    <th>Sale</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -115,25 +107,23 @@
             </div>
         </div>
     </div>
-@stop
+{% endblock %}
 
-@section('page-script')
-    <script src="{{ asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.pdf.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/axios/axios.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/tables/jquery-datatable.js') }}"></script>
+{% block pageScript %}
+    <script src="bundles/datatablescripts.bundle.js"></script>
+    <script src="plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="plugins/jquery-datatable/buttons/buttons.flash.min.js"></script>
+    <script src="plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+    <script src="plugins/jquery-datatable/buttons/buttons.pdf.min.js"></script>
+    <script src="plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="plugins/axios/axios.min.js"></script>
+    <script src="js/pages/tables/jquery-datatable.js"></script>
 
-    @if (session()->has('flashMessage'))
-        <script>
-            success('{{ session('flashMessage') }}');
-        </script>
-    @endif
+    <script>
+        success('flashMessage');
+    </script>
 
-@stop
+{% endblock %}
