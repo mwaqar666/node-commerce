@@ -12,10 +12,6 @@ const trim = (string, character, repeated = false) => {
     return string;
 };
 
-const except = (path, middleware) => {
-    return (request, response, next) => request.url.startsWith(path) ? next() : middleware(request, response, next);
-};
-
 const stringSegment = (string, separator, segment = null) => {
     const splittedString = string.split(separator).filter(part => !!part);
     if (segment) {
@@ -25,7 +21,19 @@ const stringSegment = (string, separator, segment = null) => {
     return splittedString;
 };
 
+const createSlug = string => string.split(' ').filter(word => !!word).map(word => word.trim().toLowerCase()).join('-');
+
+
+/**
+ * Express Helpers
+ * ===============
+ */
+const except = (path, middleware) => {
+    return (request, response, next) => request.url.startsWith(path) ? next() : middleware(request, response, next);
+};
+
 
 exports.trim = trim;
 exports.except = except;
+exports.createSlug = createSlug;
 exports.stringSegment = stringSegment;

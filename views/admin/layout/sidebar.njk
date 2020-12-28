@@ -24,7 +24,7 @@
             </li>
 
             <!-- Dashboard -->
-            <li {% if routeSegment[1] and routeSegment[1] === 'dashboard' %} class="active open" {% endif %}>
+            <li {% if currentRoute.name.startsWith('admin.dashboard') %} class="active open" {% endif %}>
                 <a href="{{ route('admin.dashboard').path }}">
                     <i class="zmdi zmdi-home"></i>
                     <span>Dashboard</span>
@@ -32,65 +32,81 @@
             </li>
 
             <!-- Products -->
-            <li {% if routeSegment[1] and routeSegment[1] === 'products' %} class="active open" {% endif %}>
+            <li {% if currentRoute.name.startsWith('admin.products') %} class="active open" {% endif %}>
                 <a href="javascript:void(0)" class="menu-toggle">
                     <i class="zmdi zmdi-hc-fw"></i>
                     <span>Products</span>
                 </a>
                 <ul class="ml-menu">
-                    <li {% if routeSegment[2] and routeSegment[2] === 'list' %} class="active" {% endif %}>
+                    <li {% if currentRoute.name === 'admin.products.list' %} class="active" {% endif %}>
                         <a href="{{ route('admin.products.list').path }}">List</a>
                     </li>
-                    <li {% if routeSegment[2] and routeSegment[2] === 'create' %} class="active" {% endif %}>
+                    <li {% if currentRoute.name === 'admin.products.create' %} class="active" {% endif %}>
                         <a href="{{ route('admin.products.create').path }}">Create</a>
                     </li>
                 </ul>
             </li>
 
             <!-- Tags -->
-            <li {% if routeSegment[1] and routeSegment[1] === 'tags' %} class="active open" {% endif %}>
+            <li {% if currentRoute.name.startsWith('admin.tags') %} class="active open" {% endif %}>
                 <a href="javascript:void(0)" class="menu-toggle">
                     <i class="zmdi zmdi-hc-fw"></i>
                     <span>Tags</span>
                 </a>
                 <ul class="ml-menu">
-                    <li {% if routeSegment[2] and routeSegment[2] === 'list' %} class="active" {% endif %}>
+                    <li {% if currentRoute.name === 'admin.tags.list' %} class="active" {% endif %}>
                         <a href="{{ route('admin.tags.list').path }}">List</a>
                     </li>
-                    <li {% if routeSegment[2] and routeSegment[2] === 'create' %} class="active" {% endif %}>
+                    <li {% if currentRoute.name === 'admin.tags.create' %} class="active" {% endif %}>
                         <a href="{{ route('admin.tags.create').path }}">Create</a>
                     </li>
                 </ul>
             </li>
 
+            <!-- Categories -->
+            <li {% if currentRoute.name.startsWith('admin.categories') %} class="active open" {% endif %}>
+                <a href="javascript:void(0)" class="menu-toggle">
+                    <i class="zmdi zmdi-hc-fw"></i>
+                    <span>Categories</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {% if currentRoute.name === 'admin.categories.list' %} class="active" {% endif %}>
+                        <a href="{{ route('admin.categories.list').path }}">List</a>
+                    </li>
+                    <li {% if currentRoute.name === 'admin.categories.create' %} class="active" {% endif %}>
+                        <a href="{{ route('admin.categories.create').path }}">Create</a>
+                    </li>
+                </ul>
+            </li>
+
             <!-- Orders -->
-            <li class="active open">
+            <li {#class="active open"#}>
                 <a href="javascript:void(0)" class="menu-toggle">
                     <i class="zmdi zmdi-globe"></i>
                     <span>Orders</span>
                 </a>
                 <ul class="ml-menu">
-                    <li class="active">
+                    <li {#class="active"#}>
                         <a href="javascript:void(0)">List</a>
                     </li>
                 </ul>
             </li>
 
             <!-- Customer Inquiries -->
-            <li class="active open">
+            <li {#class="active open"#}>
                 <a href="javascript:void(0)" class="menu-toggle">
                     <i class="zmdi zmdi-email"></i>
                     <span>Contact Us</span>
                 </a>
                 <ul class="ml-menu">
-                    <li class="active">
+                    <li {#class="active"#}>
                         <a href="javascript:void(0)">List</a>
                     </li>
                 </ul>
             </li>
 
             <!-- Terms & Conditions -->
-            <li class="active open">
+            <li {#class="active open"#}>
                 <a href="javascript:void(0)">
                     <i class="zmdi zmdi-shield-security"></i>
                     <span>Terms & Conditions</span>
@@ -98,7 +114,7 @@
             </li>
 
             <!-- Privacy Policy -->
-            <li class="active open">
+            <li {#class="active open"#}>
                 <a href="javascript:void(0)">
                     <i class="zmdi zmdi-shield-security"></i>
                     <span>Privacy Policy</span>
@@ -106,7 +122,7 @@
             </li>
 
             <!-- Cookies Policy -->
-            <li class="active open">
+            <li {#class="active open"#}>
                 <a href="javascript:void(0)">
                     <i class="zmdi zmdi-shield-security"></i>
                     <span>Cookies Policy</span>
@@ -114,29 +130,29 @@
             </li>
 
             <!-- Roles -->
-            <li class="active open">
+            <li {#class="active open"#}>
                 <a href="javascript:void(0)" class="menu-toggle">
                     <i class="zmdi zmdi-lock-outline"></i>
                     <span>Roles</span>
                 </a>
                 <ul class="ml-menu">
-                    <li class="active">
+                    <li {#class="active"#}>
                         <a href="javascript:void(0)">List</a>
                     </li>
-                    <li class="active">
+                    <li {#class="active"#}>
                         <a href="javascript:void(0)">Create</a>
                     </li>
                 </ul>
             </li>
 
             <!-- Users -->
-            <li class="active open">
+            <li {#class="active open"#}>
                 <a href="javascript:void(0)" class="menu-toggle">
                     <i class="zmdi zmdi-account-o"></i>
                     <span>Users</span>
                 </a>
                 <ul class="ml-menu">
-                    <li class="active">
+                    <li {#class="active"#}>
                         <a href="javascript:void(0)">List</a>
                     </li>
                 </ul>

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -e js,mjs,json,html,njk index.js"
+    "start": "nodemon -e js,mjs,json,html,njk index.js",
+    "spark": "node index.js --trace-warnings"
   },
   "keywords": [],
   "author": "",

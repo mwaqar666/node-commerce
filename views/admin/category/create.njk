@@ -39,13 +39,11 @@
                     </ul>
                 </div>
                 <div class="body">
-                    {% set createProductRoute = route('admin.products.store') %}
-                    <form id="create-product" method="{{ createProductRoute.method }}" action="{{ createProductRoute.path }}" {#enctype="multipart/form-data"#}>
+                    <form id="create-product" method="POST" action="javascript:void(0)" enctype="multipart/form-data">
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="name">{{ parentPageTitle }} Name</label>
-                                    <input type="text" class="form-control" name="name" id="name" required>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Product Name" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -53,29 +51,25 @@
                         <div class="row clearfix">
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="length">{{ parentPageTitle }} Length</label>
-                                    <input type="number" class="form-control" name="length" id="length" min="0" step="0.01" required>
+                                    <input type="number" class="form-control" name="length" id="length" min="0" step="0.01" placeholder="Product Length" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="width">{{ parentPageTitle }} Width</label>
-                                    <input type="number" class="form-control" name="width" id="width" min="0" step="0.01" required>
+                                    <input type="number" class="form-control" name="width" id="width" min="0" step="0.01" placeholder="Product Width" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="height">{{ parentPageTitle }} Height</label>
-                                    <input type="number" class="form-control" name="height" id="height" min="0" step="0.01" required>
+                                    <input type="number" class="form-control" name="height" id="height" min="0" step="0.01" placeholder="Product Height" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="weight">{{ parentPageTitle }} Weight</label>
-                                    <input type="number" class="form-control" name="weight" id="weight" min="0" step="0.01" required>
+                                    <input type="number" class="form-control" name="weight" id="weight" min="0" step="0.01" placeholder="Product Weight" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -83,15 +77,13 @@
                         <div class="row clearfix">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="regularPrice">{{ parentPageTitle }} Regular Price</label>
-                                    <input type="number" class="form-control" name="regularPrice" id="regularPrice" min="0" step="0.01" required>
+                                    <input type="number" class="form-control" name="regular_price" id="regular_price" min="0" step="0.01" placeholder="Regular Price" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="discountPrice">{{ parentPageTitle }} Discount Price</label>
-                                    <input type="number" class="form-control" name="discountPrice" id="discountPrice" min="0" step="0.01">
+                                    <input type="number" class="form-control" name="discount_price" id="discount_price" min="0" step="0.01" placeholder="Discount Price (If any)">
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -99,8 +91,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="quantity">{{ parentPageTitle }} Quantity</label>
-                                    <input type="number" class="form-control" name="quantity" id="quantity" min="1" required>
+                                    <input type="number" class="form-control" name="quantity" id="quantity" min="1" placeholder="Quantity" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -109,7 +100,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <div class="checkbox">
-                                        <input id="featured" name="featured" value="1" type="checkbox">
+                                        <input id="featured" name="featured" value="true" type="checkbox" checked>
                                         <label for="featured">Featured</label>
                                     </div>
                                 </div>
@@ -117,7 +108,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <div class="checkbox">
-                                        <input id="sale" name="sale" value="1" type="checkbox">
+                                        <input id="sale" name="sale" value="true" type="checkbox" checked>
                                         <label for="sale">Sale</label>
                                     </div>
                                 </div>
@@ -125,7 +116,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <div class="checkbox">
-                                        <input id="status" name="status" value="1" type="checkbox">
+                                        <input id="status" name="status" value="true" type="checkbox" checked>
                                         <label for="status">Status</label>
                                     </div>
                                 </div>
@@ -134,9 +125,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="image">{{ parentPageTitle }} Image</label>
-                                    <input type="text" class="form-control" name="image" id="image" required>
-{#                                    <input type="file" class="dropify" name="image" multiple data-allowed-file-extensions="jpg jpeg png gif bmp svg webp" data-max-file-size="1000K"> <!-- For Default File: data-default-file="default file path" -->#}
+                                    <input type="file" class="dropify" name="image" multiple data-allowed-file-extensions="jpg jpeg png gif bmp svg webp" data-max-file-size="1000K"> <!-- For Default File: data-default-file="default file path" -->
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -144,8 +133,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="description">{{ parentPageTitle }} Description</label>
-                                    <textarea class="summernote form-control" name="description" id="description" required>
+                                    <textarea class="summernote" name="description" id="description" placeholder="Product Description">
                                         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
                                         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
                                         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
@@ -156,7 +144,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Create {{ parentPageTitle }}</button>
+                        <button class="btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Create Product</button>
                     </form>
                 </div>
             </div>

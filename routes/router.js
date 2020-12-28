@@ -102,12 +102,45 @@ const getQueryParams = URL => {
 };
 
 /* 4)
+ * ===============================================================
+ * Get route object from parsed routes array by matching the URL.
+ * If not found, retuen false
+ * ===============================================================
+ */
+const getRouteByURL = URL => {
+    const segmentedURL = URL.split('/').filter(urlSegment => !!urlSegment);
+    const segmentedRoutesArray = routes.map(registeredRoute => registeredRoute.path.split('/').filter(pathSegment => !!pathSegment));
+
+    for (const [index, segmentedRoute] of Object.entries(segmentedRoutesArray)) {
+        if (segmentedRoute.length === segmentedURL.length) {
+
+            let matchedSegments = 0;
+            for (let segmentIndex = 0; segmentIndex < segmentedRoute.length; segmentIndex++) {
+                if (
+                    segmentedRoute[segmentIndex].startsWith(':')
+                    ||
+                    segmentedRoute[segmentIndex] === segmentedURL[segmentIndex]
+                ) {
+                    matchedSegments++;
+                }
+            }
+
+            if (matchedSegments === segmentedRoute.length) {
+                return routes[index];
+            }
+        }
+    }
+
+    return false;
+};
+
+/* 5)
  * ===================================================
  * Method to get specific route from route name.
  * If no route is found then an error will be thrown
  * ===================================================
  */
-const route = (name, routeParams = {}, queryParams = {}) => {
+const getRouteByName = (name, routeParams = {}, queryParams = {}) => {
     let requiredRoute = { ...routes.find(inspectedRoute => inspectedRoute.name === name) };
     if (Object.keys(requiredRoute).length) {
         requiredRoute.path = applyParameters(requiredRoute.path, routeParams, queryParams);
@@ -115,18 +148,6 @@ const route = (name, routeParams = {}, queryParams = {}) => {
     }
 
     throw new Error(`Route with name '${name}' is not found`);
-};
-
-/* 5)
- * =====================================================
- * Gets the current route as segmented array with '/'
- * being the delimiter. If segment parameter is present
- * then returns that specific segment, else returns the
- * whole segmented array
- * =====================================================
- */
-const routeSegment = (route, segment = null) => {
-    return utils.stringSegment(route, '/', segment);
 };
 
 
@@ -151,8 +172,8 @@ routes.forEach(route => {
 
 
 // Module Exports
-exports.route = route;
 exports.routes = routes;
 exports.router = router;
-exports.routeSegment = routeSegment;
+exports.getRouteByURL = getRouteByURL;
+exports.getRouteByName = getRouteByName;
 exports.getQueryParams = getQueryParams;
