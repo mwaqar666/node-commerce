@@ -30,10 +30,10 @@
                 <div class="card">
                     <h6>Color Skins</h6>
                     <ul class="choose-skin list-unstyled">
-                        <li data-theme="purple" onclick="configurePanelTheme('secondary_theme', 'theme-purple')" class="active">
+                        <li data-theme="purple" onclick="configurePanelTheme('secondary_theme', 'theme-purple')">
                             <div class="purple"></div>
                         </li>
-                        <li data-theme="blue" onclick="configurePanelTheme('secondary_theme', 'theme-blue')">
+                        <li data-theme="blue" onclick="configurePanelTheme('secondary_theme', 'theme-blue')" class="active">
                             <div class="blue"></div>
                         </li>
                         <li data-theme="cyan" onclick="configurePanelTheme('secondary_theme', 'theme-cyan')">
@@ -76,7 +76,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="images/xs/avatar4.jpg" alt="">
+                                    <img class="media-object" src="/static/admin/images/xs/avatar4.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Sophia
                                             <small class="float-right">11:00AM</small>
@@ -90,7 +90,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="images/xs/avatar5.jpg" alt="">
+                                    <img class="media-object" src="/static/admin/images/xs/avatar5.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Grayson
                                             <small class="float-right">11:30AM</small>
@@ -104,7 +104,7 @@
                         <li class="offline">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="images/xs/avatar2.jpg" alt="">
+                                    <img class="media-object" src="/static/admin/images/xs/avatar2.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Isabella
                                             <small class="float-right">11:31AM</small>
@@ -118,7 +118,7 @@
                         <li class="me">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="images/xs/avatar1.jpg" alt="">
+                                    <img class="media-object" src="/static/admin/images/xs/avatar1.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">John
                                             <small class="float-right">05:00PM</small>
@@ -132,7 +132,7 @@
                         <li class="online">
                             <a href="javascript:void(0)">
                                 <div class="media">
-                                    <img class="media-object" src="images/xs/avatar3.jpg" alt="">
+                                    <img class="media-object" src="/static/admin/images/xs/avatar3.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Alexander
                                             <small class="float-right">06:08PM</small>
@@ -151,6 +151,6 @@
 </aside>
 
 {% block sideBarScript %}
-    <script src="plugins/axios/axios.min.js"></script>
-    <script src="js/pages/rightsidebar.js"></script>
+    <script src="/static/admin/plugins/axios/axios.min.js"></script>
+    <script src="/static/admin/js/pages/rightsidebar.js"></script>
 {% endblock %}

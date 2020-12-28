@@ -1,8 +1,11 @@
 const modelPath = pathGenerator.modelPath;
 const Product = require(modelPath('Product'));
 
+const parentPageTitle = 'Product';
+
 exports.list = (request, response) => {
-    return response.render()
+    const title = 'List';
+    return response.render('admin/product/list', { title, parentPageTitle });
 };
 
 exports.create = (request, response) => {

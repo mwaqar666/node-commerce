@@ -22,7 +22,7 @@ const adminRoutes = [
         prefix: '/admin', as: 'admin', routes: [
 
             // Dashboard
-            { path: '/', method: 'get', name: 'dasboard', action: DashboardController.index },
+            { path: '/', method: 'get', name: 'dashboard', action: DashboardController.index },
 
             // Products
             {
@@ -34,9 +34,22 @@ const adminRoutes = [
                     { path: '/edit', method: 'get', name: 'edit', action: ProductController.edit },
                     { path: '/update', method: 'patch', name: 'edit', action: ProductController.update },
                     { path: '/delete', method: 'delete', name: 'delete', action: ProductController.delete },
-                ]
+                ],
             },
-        ]
+
+            // Tags
+            {
+                prefix: '/tags', as: 'tags', routes: [
+                    { path: '/list', method: 'get', name: 'list', action: TagController.list },
+                    { path: '/create', method: 'get', name: 'create', action: TagController.create },
+                    { path: '/store', method: 'post', name: 'store', action: TagController.store },
+                    { path: '/view', method: 'get', name: 'view', action: TagController.view },
+                    { path: '/edit', method: 'get', name: 'edit', action: TagController.edit },
+                    { path: '/update', method: 'patch', name: 'edit', action: TagController.update },
+                    { path: '/delete', method: 'delete', name: 'delete', action: TagController.delete },
+                ],
+            },
+        ],
     },
 ];
 

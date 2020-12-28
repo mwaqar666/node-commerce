@@ -1,12 +1,8 @@
 {% extends '../layout/master.njk' %}
 
-{% block title %}List{% endblock %}
-
-{% block parentPageTitle %}Product{% endblock %}
-
 {% block pageStyle %}
-    <link rel="stylesheet" href="plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="/static/admin/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/static/admin/plugins/sweetalert/sweetalert.css">
 {% endblock %}
 
 {% block content %}
@@ -15,7 +11,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        <strong>Product</strong> List
+                        <strong>{{ parentPageTitle }}</strong> {{ title }}
                     </h2>
                     <ul class="header-dropdown">
                         <li class="dropdown">
@@ -60,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-record-id="{{ $product->id }}">
+                                <tr data-record-id="1">
                                     <td>#</td>
                                     <td>Product ID</td>
                                     <td>Name</td>
@@ -110,17 +106,17 @@
 {% endblock %}
 
 {% block pageScript %}
-    <script src="bundles/datatablescripts.bundle.js"></script>
-    <script src="plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-    <script src="plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-    <script src="plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-    <script src="plugins/jquery-datatable/buttons/buttons.flash.min.js"></script>
-    <script src="plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-    <script src="plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-    <script src="plugins/jquery-datatable/buttons/buttons.pdf.min.js"></script>
-    <script src="plugins/sweetalert/sweetalert.min.js"></script>
-    <script src="plugins/axios/axios.min.js"></script>
-    <script src="js/pages/tables/jquery-datatable.js"></script>
+    <script src="/static/admin/bundles/datatablescripts.bundle.js"></script>
+    <script src="/static/admin/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="/static/admin/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="/static/admin/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="/static/admin/plugins/jquery-datatable/buttons/buttons.flash.min.js"></script>
+    <script src="/static/admin/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="/static/admin/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+    <script src="/static/admin/plugins/jquery-datatable/buttons/buttons.pdf.min.js"></script>
+    <script src="/static/admin/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="/static/admin/plugins/axios/axios.min.js"></script>
+    <script src="/static/admin/js/pages/tables/jquery-datatable.js"></script>
 
     <script>
         success('flashMessage');

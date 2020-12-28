@@ -5,8 +5,8 @@
 {% block parentPageTitle %}Order{% endblock %}
 
 {% block pageStyle %}
-    <link rel="stylesheet" href="plugins/bootstrap-select/css/bootstrap-select.css">
-    <link rel="stylesheet" href="plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="/static/admin/plugins/bootstrap-select/css/bootstrap-select.css">
+    <link rel="stylesheet" href="/static/admin/plugins/sweetalert/sweetalert.css">
 {% endblock %}
 
 {% block content %}
@@ -73,6 +73,22 @@
                                         <td>Subtotal</td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product ID</th>
+                                        <th>Name</th>
+                                        <th>Length</th>
+                                        <th>Width</th>
+                                        <th>Height</th>
+                                        <th>Weight</th>
+                                        <th>Regular Price</th>
+                                        <th>Discount Price</th>
+                                        <th>Image</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -108,8 +124,8 @@
 {% endblock %}
 
 {% block pageScript %}
-    <script src="plugins/sweetalert/sweetalert.min.js"></script>
-    <script src="plugins/axios/axios.min.js"></script>
+    <script src="/static/admin/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="/static/admin/plugins/axios/axios.min.js"></script>
     <script>
         const success = message => {
             swal('Operation Successful', message, 'success');

@@ -12,4 +12,20 @@ const trim = (string, character, repeated = false) => {
     return string;
 };
 
-module.exports.trim = trim;
+const except = (path, middleware) => {
+    return (request, response, next) => request.url.startsWith(path) ? next() : middleware(request, response, next);
+};
+
+const stringSegment = (string, separator, segment = null) => {
+    const splittedString = string.split(separator).filter(part => !!part);
+    if (segment) {
+        return splittedString[segment];
+    }
+
+    return splittedString;
+};
+
+
+exports.trim = trim;
+exports.except = except;
+exports.stringSegment = stringSegment;
