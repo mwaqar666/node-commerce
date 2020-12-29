@@ -44,7 +44,14 @@ exports.store = (request, response) => {
 
 exports.view = (request, response) => {
     const title = 'View';
-    return response.render(`${viewsDirectory}/view`, { title, parentPageTitle });
+
+    Product.findByPk(request.params.product)
+        .then(product => {
+            return response.render(`${viewsDirectory}/view`, { product, title, parentPageTitle });
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };
 
 exports.edit = (request, response) => {

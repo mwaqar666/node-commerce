@@ -59,7 +59,7 @@
                                         <td>{{ product.sale }}</td>
                                         <td>{{ product.status }}</td>
                                         <td>
-                                            <a href="javascript:void(0)" class="btn btn-success btn-icon btn-icon-mini btn-round" data-view>
+                                            <a href="{{ route('admin.products.view', { product: product.id }).path }}" class="btn btn-success btn-icon btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-eye"></i>
                                             </a>
                                             <a href="javascript:void(0)" class="btn btn-primary btn-icon btn-icon-mini btn-round" data-edit>
