@@ -1,11 +1,6 @@
 const modelPath = pathGenerator.modelPath;
-const routePath = pathGenerator.routePath;
-
+const { redirectRoute } = require('./Controller');
 const Product = require(modelPath('Product'));
-const router = require(routePath('router'));
-
-console.log(router.route);
-
 const createSlug = require(pathGenerator.utilsPath('utils')).createSlug;
 
 const parentPageTitle = 'Product';
@@ -13,7 +8,17 @@ const viewsDirectory = 'admin/product';
 
 exports.list = (request, response) => {
     const title = 'List';
-    return response.render(`${viewsDirectory}/list`, { title, parentPageTitle });
+    const dataColumns = ['id', 'name', 'regularPrice', 'discountPrice', 'quantity', 'image', 'featured', 'sale', 'status'];
+
+    Product.findAll({
+        attributes: dataColumns,
+    })
+        .then(products => {
+            return response.render(`${viewsDirectory}/list`, { dataColumns, products, title, parentPageTitle });
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };
 
 exports.create = (request, response) => {
@@ -28,7 +33,9 @@ exports.store = (request, response) => {
 
     Product.create(product)
         .then(() => {
-            return response.redirect();
+            return response.redirect(
+                redirectRoute('admin.products.list').path
+            );
         })
         .catch(error => {
             console.log(error);

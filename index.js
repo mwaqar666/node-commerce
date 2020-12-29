@@ -28,6 +28,7 @@ app.use(utils.except('/static', (request, response, next) => {
     response.locals.route = router.getRouteByName;
     response.locals.getRoute = router.getRouteByURL;
     response.locals.getQueryParams = router.getQueryParams;
+    response.locals.convertCase = utils.convertCase;
 
     next();
 }));
@@ -36,7 +37,7 @@ app.use(utils.except('/static', (request, response, next) => {
 app.use(router.router);
 
 // Synchronize Database & Run The Application
-sequelize.sync({ force: true })
+sequelize.sync(/*{ force: true }*/)
     .then((/*result*/) => {
         // console.log('Success: ', result);
 
