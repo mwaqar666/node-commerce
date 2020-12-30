@@ -42,21 +42,12 @@ Product.init({
     },
     featured: {
         type: Sequelize.TINYINT.UNSIGNED, allowNull: false, defaultValue: 0,
-        get() {
-            return `${this.getDataValue('featured') === 0 ? 'Non' : ''} Featured`;
-        },
     },
     sale: {
         type: Sequelize.TINYINT.UNSIGNED, allowNull: false, defaultValue: 0,
-        get() {
-            return `${this.getDataValue('sale') === 0 ? 'Not On' : 'On'} Sale`;
-        },
     },
     status: {
         type: Sequelize.TINYINT.UNSIGNED, allowNull: false, defaultValue: 0,
-        get() {
-            return `${this.getDataValue('status') === 0 ? 'In' : ''} Active`;
-        },
     }
 }, {
     sequelize, tableName: 'products'

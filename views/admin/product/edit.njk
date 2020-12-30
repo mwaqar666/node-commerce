@@ -1,10 +1,6 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 {% extends '../layout/master.njk' %}
 
-{% block title %}Edit{% endblock %}
-
-{% block parentPageTitle %}Product{% endblock %}
-
 {% block pageStyle %}
     <link rel="stylesheet" href="/static/admin/plugins/select2/select2.css">
     <link rel="stylesheet" href="/static/admin/plugins/summernote/dist/summernote.css">
@@ -23,7 +19,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        <strong> Product</strong> Edit
+                        <strong>{{ parentPageTitle }}</strong> {{ title }}
                     </h2>
                     <ul class="header-dropdown">
                         <li class="dropdown">
@@ -44,11 +40,14 @@
                     </ul>
                 </div>
                 <div class="body">
-                    <form id="edit-product" method="POST" action="javascript:void(0)" enctype="multipart/form-data">
+                    {% set updateProductRoute = route('admin.products.update', { product: product.id }) %}
+                    <form id="edit-product" method="POST" action="{{ updateProductRoute.path }}">
+                        {{ _method(updateProductRoute.method) | safe }}
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Product Name" required>
+                                    <label for="name">Product Name</label>
+                                    <input type="text" class="form-control" name="name" id="name" value="{{ product.name }}" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -56,25 +55,29 @@
                         <div class="row clearfix">
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="length" id="length" min="0" step="0.01" placeholder="Product Length" required>
+                                    <label for="length">Product Length</label>
+                                    <input type="number" class="form-control" name="length" id="length" min="0" step="0.01" value="{{ product.length }}" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="width" id="width" min="0" step="0.01" placeholder="Product Width" required>
+                                    <label for="width">Product Width</label>
+                                    <input type="number" class="form-control" name="width" id="width" min="0" step="0.01" value="{{ product.width }}" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="height" id="height" min="0" step="0.01" placeholder="Product Height" required>
+                                    <label for="height">Product Height</label>
+                                    <input type="number" class="form-control" name="height" id="height" min="0" step="0.01" value="{{ product.height }}" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="weight" id="weight" min="0" step="0.01" placeholder="Product Weight" required>
+                                    <label for="weight">Product Weight</label>
+                                    <input type="number" class="form-control" name="weight" id="weight" min="0" step="0.01" value="{{ product.weight }}" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -82,13 +85,15 @@
                         <div class="row clearfix">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="regular_price" id="regular_price" min="0" step="0.01" placeholder="Regular Price" required>
+                                    <label for="regularPrice">Regular Price</label>
+                                    <input type="number" class="form-control" name="regularPrice" id="regularPrice" min="0" step="0.01" value="{{ product.regularPrice }}" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="discount_price" id="discount_price" min="0" step="0.01" placeholder="Discount Price (If any)">
+                                    <label for="discountPrice">Discount Price</label>
+                                    <input type="number" class="form-control" name="discountPrice" id="discountPrice" min="0" step="0.01" value="{{ product.discountPrice }}">
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -96,7 +101,8 @@
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="quantity" id="quantity" min="1" placeholder="Quantity" required>
+                                    <label for="quantity">Product Quantity</label>
+                                    <input type="number" class="form-control" name="quantity" id="quantity" min="1" value="{{ product.quantity }}" required>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -105,7 +111,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <div class="checkbox">
-                                        <input id="featured" name="featured" value="true" type="checkbox" checked>
+                                        <input id="featured" name="featured" value="1" type="checkbox" {% if product.featured === 1 %}checked{% endif %}>
                                         <label for="featured">Featured</label>
                                     </div>
                                 </div>
@@ -113,7 +119,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <div class="checkbox">
-                                        <input id="sale" name="sale" value="true" type="checkbox" checked>
+                                        <input id="sale" name="sale" value="1" type="checkbox" {% if product.sale === 1 %}checked{% endif %}>
                                         <label for="sale">Sale</label>
                                     </div>
                                 </div>
@@ -121,24 +127,26 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <div class="checkbox">
-                                        <input id="status" name="status" value="true" type="checkbox">
+                                        <input id="status" name="status" value="1" type="checkbox" {% if product.status === 1 %}checked{% endif %}>
                                         <label for="status">Status</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row clearfix">
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                            {#<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group" id="old-image-preview">
                                     <a href="javascript:void(0)">
                                         <img class="img-fluid" src="javascript:void(0)" alt>
                                         <input type="hidden" name="image" value="javascript:void(0)">
                                     </a>
                                 </div>
-                            </div>
+                            </div>#}
                             <div class="col-xl-9 col-lg-8 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <input type="file" class="dropify" name="image" multiple data-allowed-file-extensions="jpg jpeg png gif bmp svg webp" data-max-file-size="1000K"> <!-- For Default File: data-default-file="default file path" -->
+                                    <label for="image">Product Image</label>
+                                    <input type="text" class="form-control" name="image" id="image" value="{{ product.image }}" required>
+{#                                    <input type="file" class="dropify" name="image" multiple data-allowed-file-extensions="jpg jpeg png gif bmp svg webp" data-max-file-size="1000K"> <!-- For Default File: data-default-file="default file path" -->#}
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
@@ -146,12 +154,13 @@
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <textarea class="summernote" name="description" id="description" placeholder="Product Description">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</textarea>
+                                    <label for="description">Product Description</label>
+                                    <textarea class="summernote" name="description" id="description">{{ product.description | safe }}</textarea>
                                     <!-- <small class="text-danger">Error Message Here</small> -->
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Update Product</button>
+                        <button class="btn btn-raised btn-primary waves-effect" type="submit" style="width: 100%">Update {{ parentPageTitle }}</button>
                     </form>
                 </div>
             </div>

@@ -93,7 +93,7 @@
                     <span class="text-muted">­</span>
                     <div class="w_description text-danger">
                         <i class="zmdi zmdi-trending-up"></i>
-                        <span>Featured</span>
+                        <span>{% if product.featured === 0 %} Not Featured {% else %} Featured {% endif %}</span>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                     <span class="text-muted">­</span>
                     <div class="w_description text-success">
                         <i class="zmdi zmdi-shopping-cart-plus"></i>
-                        <span>In Sale</span>
+                        <span>{% if product.sale === 0 %} Not On Sale {% else %} On Sale {% endif %}</span>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                     <span class="text-muted">­</span>
                     <div class="w_description text-success">
                         <i class="zmdi zmdi-layers-off"></i>
-                        <span>Active</span>
+                        <span>{% if product.status === 0 %} Inactive {% else %} Active {% endif %}</span>
                     </div>
                 </div>
             </div>

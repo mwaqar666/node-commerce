@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'njk');
 app.use('/static', express.static(pathGenerator.publicPath()));
 
+// Override The Request Method With Custom Method If Provided In "_method" Field
+app.use(utils.overrideRequestMethodIfProvidedExplicitly());
 
 // Set Some Helper Methods & Variables To Be Used In Views
 app.use(utils.except('/static', (request, response, next) => {
@@ -29,6 +31,7 @@ app.use(utils.except('/static', (request, response, next) => {
     response.locals.getRoute = router.getRouteByURL;
     response.locals.getQueryParams = router.getQueryParams;
     response.locals.convertCase = utils.convertCase;
+    response.locals._method = utils._method;
 
     next();
 }));
