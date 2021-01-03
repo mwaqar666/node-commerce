@@ -36,7 +36,7 @@ app.use(utils.except('/static', (request, response, next) => {
     next();
 }));
 
-// Initialize Router
+// Use Router
 app.use(router.router);
 
 // Synchronize Database & Run The Application

@@ -2,7 +2,7 @@ const {Op} = require('sequelize');
 const modelPath = pathGenerator.modelPath;
 const {redirectRoute} = require(pathGenerator.controllerPath('Controller'));
 const Product = require(modelPath('Product'));
-const createSlug = require(pathGenerator.utilsPath('utils')).createSlug;
+const {createSlug} = require(pathGenerator.utilsPath('utils'));
 
 const parentPageTitle = 'Product';
 const viewsDirectory = 'admin/product';
@@ -14,8 +14,8 @@ exports.list = (request, response) => {
     Product.findAll({
         attributes: dataColumns,
     })
-        .then(products => {
-            return response.render(`${viewsDirectory}/list`, {dataColumns, products, title, parentPageTitle});
+        .then(data => {
+            return response.render(`${viewsDirectory}/list`, {dataColumns, data, title, parentPageTitle});
         })
         .catch(error => {
             console.log(error);

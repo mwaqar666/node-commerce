@@ -16,6 +16,9 @@ Category.init({
     image: {
         type: Sequelize.STRING, allowNull: false,
     },
+    status: {
+        type: Sequelize.TINYINT.UNSIGNED, allowNull: false, defaultValue: 0,
+    }
 }, {
     sequelize, tableName: 'categories'
 });

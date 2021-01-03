@@ -20,7 +20,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right slideUp">
                                 <li>
-                                    <a href="{{ route('admin.products.create') }}">Create</a>
+                                    <a href="{{ route('admin.products.create').path }}">Create</a>
                                 </li>
                             </ul>
                         </li>
@@ -44,32 +44,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for product in products %}
-                                    <tr data-record-id="{{ product.id }}">
+                                {% for dataItem in data %}
+                                    <tr data-record-id="{{ dataItem.id }}">
                                         <td>{{ loop.index }}</td>
-                                        <td>{{ product.id }}</td>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.regularPrice }}</td>
-                                        <td>{{ product.discountPrice }}</td>
-                                        <td>{{ product.quantity }}</td>
+                                        {% for dataColumn in dataColumns %}
+                                            <td>
+                                                {% if dataColumn === 'image' %}
+                                                    <img src="{{ dataItem[dataColumn] }}" alt="">
+                                                {% else %}
+                                                    {{ dataItem[dataColumn] }}
+                                                {% endif %}
+                                            </td>
+                                        {% endfor %}
                                         <td>
-                                            <img src="{{ product.image }}" alt="image">
-                                        </td>
-                                        <td>{{ product.featured }}</td>
-                                        <td>{{ product.sale }}</td>
-                                        <td>{{ product.status }}</td>
-                                        <td>
-                                            <a href="{{ route('admin.products.view', { product: product.id }).path }}" class="btn btn-success btn-icon btn-icon-mini btn-round">
+                                            <a href="{{ route('admin.products.view', { product: dataItem.id }).path }}" class="btn btn-success btn-icon btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-eye"></i>
                                             </a>
-                                            <a href="{{ route('admin.products.edit', { product: product.id }).path }}" class="btn btn-primary btn-icon btn-icon-mini btn-round" data-edit>
+                                            <a href="{{ route('admin.products.edit', { product: dataItem.id }).path }}" class="btn btn-primary btn-icon btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-edit"></i>
                                             </a>
-                                            <a href="javascript:void(0)" class="btn btn-danger btn-icon btn-icon-mini btn-round" onclick="document.getElementById('product-delete-form-{{ product.id }}').submit()">
+                                            <a href="javascript:void(0)" class="btn btn-danger btn-icon btn-icon-mini btn-round" onclick="document.getElementById('data-item-delete-form-{{ dataItem.id }}').submit()">
                                                 <i class="zmdi zmdi-delete"></i>
                                             </a>
-                                            {% set productDeleteForm = route('admin.products.delete', { product: product.id }) %}
-                                            <form id="product-delete-form-{{ product.id }}" action="{{ productDeleteForm.path }}" method="POST" style="display: none">{{ _method(productDeleteForm.method) | safe }}</form>
+                                            {% set dataItemDeleteForm = route('admin.products.delete', { product: dataItem.id }) %}
+                                            <form id="data-item-delete-form-{{ dataItem.id }}" action="{{ dataItemDeleteForm.path }}" method="POST" style="display: none">{{ _method(dataItemDeleteForm.method) | safe }}</form>
                                         </td>
                                     </tr>
                                 {% endfor %}

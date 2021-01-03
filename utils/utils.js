@@ -58,7 +58,7 @@ const convertCase = (string, fromCaseString, toCaseString) => {
     const stringCases = ['kebabCase', 'snakeCase', 'spaceCase', 'pascalCase', 'camelCase'];
 
     if (! stringCases.includes(fromCaseString) || ! stringCases.includes(toCaseString)) {
-        throw new Error('Please specify valid case: kebabCase | snakeCase | pascalCase | camelCase');
+        throw new Error('Please specify valid case: kebabCase | snakeCase | spaceCase | pascalCase | camelCase');
     }
 
     let inputStringCache = [];
