@@ -12,23 +12,25 @@ const adminRoutes = require('./admin-routes').adminRoutes;
 // ================================================================================================
 
 
-/* 1)
- * =============================================================================
- * This method is responsible for recursively creating routes from the original
+/**
+ * 1) This method is responsible for recursively creating routes from the original
  * routes array that contain nested prefix groups. This is a recursive method
  * that looks for prefixed group routes deep inside the object and respectively
  * applies the prefix path & prefix names to created a single dimensional route
  * array
- * =============================================================================
  */
-const parsePrefixedRoutes = (prefixedRoutesArray, prefixPathArray, prefixNameArray) => {
+const parsePrefixedRoutes = (prefixedRoutesArray, prefixPathArray, prefixNameArray, prefixNamespaceArray) => {
     prefixPathArray = !Array.isArray(prefixPathArray) ? [prefixPathArray] : [...prefixPathArray];
     prefixNameArray = !Array.isArray(prefixNameArray) ? [prefixNameArray] : [...prefixNameArray];
+    prefixNamespaceArray = !Array.isArray(prefixNamespaceArray) ? [prefixNamespaceArray] : [...prefixNamespaceArray];
 
     return prefixedRoutesArray.map(prefixedRoute => {
         if (!!prefixedRoute.prefix) {
             return parsePrefixedRoutes(
-                prefixedRoute.routes, [...prefixPathArray, utils.trim(prefixedRoute.prefix, '/')], [...prefixNameArray, utils.trim(prefixedRoute.as, '.')]
+                prefixedRoute.routes,
+                [...prefixPathArray, utils.trim(prefixedRoute.prefix, '/')],
+                [...prefixNameArray, utils.trim(prefixedRoute.as, '.')],
+                [...prefixNamespaceArray, utils.trim(prefixedRoute.namespace, '/')]
             );
         }
 
@@ -38,18 +40,30 @@ const parsePrefixedRoutes = (prefixedRoutesArray, prefixPathArray, prefixNameArr
             path: `/${prefixPath ? `${prefixPath}/` : ``}${utils.trim(prefixedRoute.path, '/')}`,
             method: prefixedRoute.method,
             name: `${prefixNameArray.join('.')}.${utils.trim(prefixedRoute.name, '.')}`,
-            action: prefixedRoute.action
+            action: routeToControllerMethod(prefixedRoute.action, prefixNamespaceArray),
         };
     });
 };
 
-/* 2)
- * =========================================================================
- * Apply parameters and query string to generate dynamic routes.
+/**
+ * 2) Gets the function signature from the string "controller@method" from
+ * route action. Also applies namespace if necessary
+ */
+const routeToControllerMethod = (routeAction, namespace = '') => {
+    const [controller, method] = routeAction.split('@');
+
+    if (Array.isArray(namespace)) {
+        namespace = namespace.join('/');
+    }
+
+    return require(pathGenerator.controllerPath(`${!!namespace ? `${namespace}/` : ``}${controller}`))[method];
+};
+
+/**
+ * 3) Apply parameters and query string to generate dynamic routes.
  * If user provides a dynamic URL portion of route which is not present
  * on the URL, then an error is thrown. Similarly, if user didn't provide
  * a required dynamic portion of a URL, then an error will also be thrown.
- * =========================================================================
  */
 const applyParameters = (path, routeParams, queryParams) => {
 
@@ -81,12 +95,10 @@ const applyParameters = (path, routeParams, queryParams) => {
     return path;
 };
 
-/* 3)
- * ====================================================
- * Get query parameters as key value pair from a URL.
+/**
+ * 4) Get query parameters as key value pair from a URL.
  * If no query param is present on the URL, return an
  * empty object
- * ====================================================
  */
 const getQueryParams = URL => {
     const queryParams = {};
@@ -101,11 +113,9 @@ const getQueryParams = URL => {
     return queryParams;
 };
 
-/* 4)
- * ===============================================================
- * Get route object from parsed routes array by matching the URL.
- * If not found, retuen false
- * ===============================================================
+/**
+ * 5) Get route object from parsed routes array by matching the URL.
+ * If not found, return false
  */
 const getRouteByURL = URL => {
     const segmentedURL = URL.split('/').filter(urlSegment => !!urlSegment);
@@ -134,11 +144,9 @@ const getRouteByURL = URL => {
     return false;
 };
 
-/* 5)
- * ===================================================
- * Method to get specific route from route name.
+/**
+ * 6) Method to get specific route from route name.
  * If no route is found then an error will be thrown
- * ===================================================
  */
 const getRouteByName = (name, routeParams = {}, queryParams = {}) => {
     let requiredRoute = { ...routes.find(inspectedRoute => inspectedRoute.name === name) };
@@ -159,9 +167,10 @@ const getRouteByName = (name, routeParams = {}, queryParams = {}) => {
 
 const routes = [...appRoutes, ...adminRoutes].map(route => {
     if (!!route.prefix) {
-        return parsePrefixedRoutes(route.routes, utils.trim(route.prefix, '/'), utils.trim(route.as, '.'));
+        return parsePrefixedRoutes(route.routes, utils.trim(route.prefix, '/'), utils.trim(route.as, '.'), utils.trim(route.namespace, '/'));
     }
 
+    route.action = routeToControllerMethod(route.action);
     return route;
 }).flat(Infinity);
 
@@ -169,6 +178,8 @@ const routes = [...appRoutes, ...adminRoutes].map(route => {
 routes.forEach(route => {
     router[route.method](route.path, route.action);
 });
+
+console.log(routes.map(route => route.action));
 
 
 // Module Exports

@@ -1,9 +1,11 @@
-/* 1)
- * ===========================================
- * Trim character from start and end of string
- * ===========================================
+/**
+ *  1) Trim character from start and end of string
  */
 const trim = (string, character, repeated = false) => {
+    if (!(string instanceof String) && typeof string !== 'string') {
+        return string;
+    }
+
     if (string[0] === character) {
         string = string.slice(1);
         if (repeated) return trim(string, character, repeated);
@@ -17,12 +19,10 @@ const trim = (string, character, repeated = false) => {
     return string;
 };
 
-/* 2)
- * ==================================================================
- * Segment the string from the provided delimiter. If segment index
+/**
+ * 2) Segment the string from the provided delimiter. If segment index
  * is provided then return that specific segment, otherwise, return
  * the whole segmented array
- * ==================================================================
  */
 const stringSegment = (string, separator, segment = null) => {
     const splittedString = string.split(separator).filter(part => !!part);
@@ -33,10 +33,8 @@ const stringSegment = (string, separator, segment = null) => {
     return splittedString;
 };
 
-/* 3)
- * ===================================================
- * Javascript implementation of PHP's "ucfirst(str)"
- * ===================================================
+/**
+ * 3) Javascript implementation of PHP's "ucfirst(str)"
  */
 const ucfirst = string => {
     if (typeof string === 'string') {
@@ -46,12 +44,10 @@ const ucfirst = string => {
     throw new Error('Invalid input');
 };
 
-/* 4)
- * ============================================================================
- * Convert String From One Case To Another Case
+/**
+ * 4) Convert String From One Case To Another Case
  * ----------------------------------------------------------------------------
  * Current Support: Camel Case, Kebab Case, Snake Case, Pascal Case, Space Case
- * ============================================================================
  */
 const convertCase = (string, fromCaseString, toCaseString) => {
     const caseSplitters = { kebabCase: '-', snakeCase: '_', spaceCase: ' ' };
@@ -101,17 +97,13 @@ const convertCase = (string, fromCaseString, toCaseString) => {
     }
 };
 
-/* 5)
- * ==========================================================
- * Create slug from given name using "-" as default delimiter
- * ==========================================================
+/**
+ * 5) Create slug from given name using "-" as default delimiter
  */
 const createSlug = (string, delimiter = '-') => string.split(' ').filter(word => !!word).map(word => word.trim().toLowerCase()).join(delimiter);
 
-/* 6)
- * ==============================
- * Shuffle elements of an array
- * ==============================
+/**
+ * 6) Shuffle elements of an array
  */
 const shuffle = array => {
     let currentIndex = array.length, randomIndex;
@@ -130,20 +122,16 @@ const shuffle = array => {
     return array;
 };
 
-/* 7)
- * =======================================================
- * Generate array of numbers from lowerBound (inclusive)
+/**
+ * 7) Generate array of numbers from lowerBound (inclusive)
  * to upperBound (inclusive)
- * =======================================================
  */
 const range = (upperBound, lowerBound = 0) => {
     return [ ...Array(upperBound - lowerBound + 1).keys() ].map(element => element + lowerBound);
 };
 
-/* 8)
- * ==========================================
- * Generate random string of "n" characters
- * ==========================================
+/**
+ * 8) Generate random string of "n" characters
  */
 const randomString = length => {
     return [
@@ -158,21 +146,17 @@ const randomString = length => {
 /* =================================== Express Helpers ========================================= */
 /* ============================================================================================= */
 
-/* 9)
- * ==========================================================
- * Calls the middleware function on request except starting
+/**
+ * 9) Calls the middleware function on request except starting
  * from the provided path
- * ==========================================================
  */
 const except = (path, middleware) => {
     return (request, response, next) => request.url.startsWith(path) ? next() : middleware(request, response, next);
 };
 
-/* 10)
- * =======================================================
- * Overrides the method request body and uses the method
+/**
+ * 10) Overrides the method request body and uses the method
  * provided on "_method" field
- * =======================================================
  */
 const overrideRequestMethodIfProvidedExplicitly = () => {
     return (request, response, next) => {
@@ -184,11 +168,9 @@ const overrideRequestMethodIfProvidedExplicitly = () => {
     }
 };
 
-/* 11)
- * =====================================================
- * Set the custom "_method" input field with provided
+/**
+ * 11) Set the custom "_method" input field with provided
  * method
- * =====================================================
  */
 const _method = method => `<input type="hidden" name="_method" value="${method.toUpperCase()}">`;
 
