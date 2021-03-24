@@ -3,20 +3,20 @@ const sequelize = require(pathGenerator.utilsPath('database'));
 
 const User = require(pathGenerator.modelPath('User'));
 
-class Product extends Sequelize.Model {}
+class Currency extends Sequelize.Model {}
 
-Product.init({
+Currency.init({
     id: {
         type: Sequelize.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true, allowNull: false,
-    },
-    slug: {
-        type: Sequelize.STRING, allowNull: false, unique: true,
     },
     name: {
         type: Sequelize.STRING, allowNull: false,
     },
-    image: {
-        type: Sequelize.STRING, allowNull: true,
+    shortName: {
+        type: Sequelize.STRING, allowNull: false,
+    },
+    symbol: {
+        type: Sequelize.STRING, allowNull: false,
     },
     status: {
         type: Sequelize.BOOLEAN, defaultValue: false,
@@ -31,10 +31,10 @@ Product.init({
         type: Sequelize.BIGINT.UNSIGNED, allowNull: true, defaultValue: null, onDelete: 'SET NULL', references: { model: User, key: 'id' },
     },
     deleted_at: {
-        type: Sequelize.DATE, allowNull: true,
+        type: Sequelize.DATE, allowNull: true
     }
 }, {
-    sequelize, tableName: 'products', createdAt: 'created_at', updatedAt: 'updated_at',
+    sequelize, tableName: 'currencies', createdAt: 'created_at', updatedAt: 'updated_at',
 });
 
-module.exports = Product;
+module.exports = Currency;

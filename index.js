@@ -40,7 +40,7 @@ app.use(utils.except('/static', (request, response, next) => {
 app.use(router.router);
 
 // Synchronize Database & Run The Application
-sequelize.sync(/*{ force: true }*/)
+sequelize.sync({ force: true })
     .then((/*result*/) => {
         // console.log('Success: ', result);
 

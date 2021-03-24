@@ -174,13 +174,12 @@ const routes = [...appRoutes, ...adminRoutes].map(route => {
     return route;
 }).flat(Infinity);
 
+console.log(routes);
+
 // Register routes in Express
 routes.forEach(route => {
     router[route.method](route.path, route.action);
 });
-
-console.log(routes.map(route => route.action));
-
 
 // Module Exports
 exports.routes = routes;
