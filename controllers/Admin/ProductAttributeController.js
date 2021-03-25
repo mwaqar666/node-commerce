@@ -109,4 +109,4 @@ class ProductAttributeController extends Controller {
     }
 }
 
-module.exports = new ProductAttributeController;
+module.exports = ProductAttributeController;

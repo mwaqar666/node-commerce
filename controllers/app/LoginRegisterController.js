@@ -8,4 +8,4 @@ class LoginRegisterController extends Controller {
     }
 }
 
-module.exports = new LoginRegisterController;
+module.exports = LoginRegisterController;

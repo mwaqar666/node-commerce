@@ -8,4 +8,4 @@ class WishlistController extends Controller {
     }
 }
 
-module.exports = new WishlistController;
+module.exports = WishlistController;

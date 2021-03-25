@@ -20,4 +20,4 @@ class ShopController extends Controller {
     }
 }
 
-module.exports = new ShopController;
+module.exports = ShopController;

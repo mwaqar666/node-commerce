@@ -11,4 +11,4 @@ class DashboardController extends Controller {
     }
 }
 
-module.exports = new DashboardController;
+module.exports = DashboardController;

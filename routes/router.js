@@ -18,14 +18,14 @@ class Router {
     }
 
     createParsedRoutes() {
-        this.rawRoutes = this.rawRoutes.map(route => {
+        this.parsedRoutes = this.rawRoutes.map(route => {
             if (!!route.prefix) {
                 return this.parsePrefixedRoutes(route.routes, utils.trim(route.prefix, '/'), utils.trim(route.as, '.'), utils.trim(route.namespace, '/'));
             }
 
             route.action = this.routeToControllerMethod(route.action);
             return route;
-        });
+        }).flat(Infinity);
     }
 
     parsePrefixedRoutes(prefixedRoutesArray, prefixPathArray, prefixNameArray, prefixNamespaceArray) {
@@ -76,7 +76,8 @@ class Router {
             return controllerInstance;
         }
 
-        controllerInstance = require(controllerPath);
+        const controller = require(controllerPath);
+        controllerInstance = new controller();
         this.controllerInstances[controllerPath] = controllerInstance;
         return controllerInstance;
     }

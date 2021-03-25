@@ -12,4 +12,4 @@ class HomeController extends Controller {
     }
 }
 
-module.exports = new HomeController;
+module.exports = HomeController;

@@ -8,4 +8,4 @@ class CompareController extends Controller {
     }
 }
 
-module.exports = new CompareController;
+module.exports = CompareController;

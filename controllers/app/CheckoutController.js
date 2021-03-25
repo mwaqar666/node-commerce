@@ -8,4 +8,4 @@ class CheckoutController extends Controller {
     }
 }
 
-module.exports = new CheckoutController;
+module.exports = CheckoutController;

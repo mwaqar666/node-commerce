@@ -48,4 +48,4 @@ class CategoryController extends Controller {
     }
 }
 
-module.exports = new CategoryController;
+module.exports = CategoryController;

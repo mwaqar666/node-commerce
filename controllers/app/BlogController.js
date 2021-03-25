@@ -40,4 +40,4 @@ class BlogController extends Controller {
     }
 }
 
-module.exports = new BlogController;
+module.exports = BlogController;

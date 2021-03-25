@@ -40,4 +40,4 @@ class TagController extends Controller {
     }
 }
 
-module.exports = new TagController;
+module.exports = TagController;

@@ -8,4 +8,4 @@ class ContactUsController extends Controller {
     }
 }
 
-module.exports = new ContactUsController;
+module.exports = ContactUsController;

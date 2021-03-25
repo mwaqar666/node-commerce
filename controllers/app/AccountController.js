@@ -8,4 +8,4 @@ class AccountController extends Controller {
     }
 }
 
-module.exports = new AccountController;
+module.exports = AccountController;

@@ -16,4 +16,4 @@ class ProductController extends Controller {
     }
 }
 
-module.exports = new ProductController;
+module.exports = ProductController;

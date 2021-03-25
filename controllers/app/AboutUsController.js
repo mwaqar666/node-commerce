@@ -8,4 +8,4 @@ class AboutUsController extends Controller {
     }
 }
 
-module.exports = new AboutUsController;
+module.exports = AboutUsController;

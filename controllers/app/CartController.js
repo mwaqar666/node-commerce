@@ -8,4 +8,4 @@ class CartController extends Controller {
     }
 }
 
-module.exports = new CartController;
+module.exports = CartController;

@@ -40,4 +40,4 @@ class UserController extends Controller {
     }
 }
 
-module.exports = new UserController;
+module.exports = UserController;

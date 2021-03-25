@@ -48,4 +48,4 @@ class CurrencyController extends Controller {
     }
 }
 
-module.exports = new CurrencyController;
+module.exports = CurrencyController;
