@@ -1,11 +1,19 @@
-exports.productOne = (request, response) => {
-    return response.render('app/pages/single-product');
-};
+const Controller = require(pathGenerator.controllerPath('Controller'));
 
-exports.productTwo = (request, response) => {
-    return response.render('app/pages/single-product-configurable');
-};
+class ProductController extends Controller {
 
-exports.productThree = (request, response) => {
-    return response.render('app/pages/single-product-group');
-};
+    // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will work on that later
+    productOne(request, response) {
+        return response.render('app/pages/single-product');
+    }
+
+    productTwo(request, response) {
+        return response.render('app/pages/single-product-configurable');
+    }
+
+    productThree(request, response) {
+        return response.render('app/pages/single-product-group');
+    }
+}
+
+module.exports = new ProductController;

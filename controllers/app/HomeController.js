@@ -1,7 +1,15 @@
-exports.indexOne = (request, response) => {
-    return response.render('app/pages/index');
-};
+const Controller = require(pathGenerator.controllerPath('Controller'));
 
-exports.indexTwo = (request, response) => {
-    return response.render('app/pages/index-2');
-};
+class HomeController extends Controller {
+
+    // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will work on that later
+    indexOne(request, response) {
+        return response.render('app/pages/index');
+    }
+
+    indexTwo(request, response) {
+        return response.render('app/pages/index-2');
+    }
+}
+
+module.exports = new HomeController;

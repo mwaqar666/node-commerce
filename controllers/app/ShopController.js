@@ -1,15 +1,23 @@
-exports.shopOne = (request, response) => {
-    return response.render('app/pages/shop-3-column');
-};
+const Controller = require(pathGenerator.controllerPath('Controller'));
 
-exports.shopTwo = (request, response) => {
-    return response.render('app/pages/shop-4-column');
-};
+class ShopController extends Controller {
 
-exports.shopThree = (request, response) => {
-    return response.render('app/pages/shop-left-sidebar');
-};
+    // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will work on that later
+    shopOne(request, response) {
+        return response.render('app/pages/shop-3-column');
+    }
 
-exports.shopFour = (request, response) => {
-    return response.render('app/pages/shop-right-sidebar');
-};
+    shopTwo(request, response) {
+        return response.render('app/pages/shop-4-column');
+    }
+
+    shopThree(request, response) {
+        return response.render('app/pages/shop-left-sidebar');
+    }
+
+    shopFour(request, response) {
+        return response.render('app/pages/shop-right-sidebar');
+    }
+}
+
+module.exports = new ShopController;

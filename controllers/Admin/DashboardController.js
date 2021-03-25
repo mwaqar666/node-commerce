@@ -1,5 +1,14 @@
-const parentPageTitle = 'Dashboard';
+const Controller = require(pathGenerator.controllerPath('Controller'));
 
-exports.index = (request, response) => {
-    return response.render('admin/dashboard', { parentPageTitle });
-};
+class DashboardController extends Controller {
+
+    parentPageTitle = 'Dashboard';
+    viewsDirectory = 'admin/currency';
+
+    // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will work on that later
+    index(request, response) {
+        return response.render(`${this.viewsDirectory}`, {parentPageTitle: this.parentPageTitle});
+    }
+}
+
+module.exports = new DashboardController;

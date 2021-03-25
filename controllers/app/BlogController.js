@@ -1,35 +1,43 @@
-exports.blogOne = (request, response) => {
-    return response.render('app/pages/blog-grid-3-column');
-};
+const Controller = require(pathGenerator.controllerPath('Controller'));
 
-exports.blogTwo = (request, response) => {
-    return response.render('app/pages/blog-grid-4-column');
-};
+class BlogController extends Controller {
 
-exports.blogThree = (request, response) => {
-    return response.render('app/pages/blog-grid-left-sidebar');
-};
+    // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will work on that later
+    blogOne(request, response) {
+        return response.render('app/pages/blog-grid-3-column');
+    }
 
-exports.blogFour = (request, response) => {
-    return response.render('app/pages/blog-grid-right-sidebar');
-};
+    blogTwo(request, response) {
+        return response.render('app/pages/blog-grid-4-column');
+    }
 
-exports.blogFive = (request, response) => {
-    return response.render('app/pages/blog-list-left-sidebar');
-};
+    blogThree(request, response) {
+        return response.render('app/pages/blog-grid-left-sidebar');
+    }
 
-exports.blogSix = (request, response) => {
-    return response.render('app/pages/blog-list-right-sidebar');
-};
+    blogFour(request, response) {
+        return response.render('app/pages/blog-grid-right-sidebar');
+    }
 
-exports.blogSeven = (request, response) => {
-    return response.render('app/pages/blog-single');
-};
+    blogFive(request, response) {
+        return response.render('app/pages/blog-list-left-sidebar');
+    }
 
-exports.blogEight = (request, response) => {
-    return response.render('app/pages/blog-single-left-sidebar');
-};
+    blogSix(request, response) {
+        return response.render('app/pages/blog-list-right-sidebar');
+    }
 
-exports.blogNine = (request, response) => {
-    return response.render('app/pages/blog-single-right-sidebar');
-};
+    blogSeven(request, response) {
+        return response.render('app/pages/blog-single');
+    }
+
+    blogEight(request, response) {
+        return response.render('app/pages/blog-single-left-sidebar');
+    }
+
+    blogNine(request, response) {
+        return response.render('app/pages/blog-single-right-sidebar');
+    }
+}
+
+module.exports = new BlogController;

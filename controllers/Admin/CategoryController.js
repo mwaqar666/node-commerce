@@ -1,50 +1,51 @@
-const {Op} = require('sequelize');
-const modelPath = pathGenerator.modelPath;
-const {redirectRoute} = require(pathGenerator.controllerPath('Controller'));
-const Category = require(modelPath('Category'));
-const {createSlug} = require(pathGenerator.utilsPath('utils'));
+const Controller = require(pathGenerator.controllerPath('Controller'));
+const Category = require(pathGenerator.modelPath('Category'));
 
-const parentPageTitle = 'Category';
-const viewsDirectory = 'admin/category';
+class CategoryController extends Controller {
 
-exports.list = (request, response) => {
-    const title = 'List';
-    const dataColumns = ['id', 'name', 'image', 'status'];
+    parentPageTitle = 'Category';
+    viewsDirectory = 'admin/category';
 
-    Category.findAll({
-        attributes: dataColumns,
-    })
-        .then(data => {
-            return response.render(`${viewsDirectory}/list`, {dataColumns, data, title, parentPageTitle});
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
+    // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will work on that later
+    list(request, response) {
+        const title = 'List';
+        const dataColumns = ['id', 'name', 'image', 'status'];
 
-exports.create = (request, response) => {
-    const title = 'Create';
-    return response.render(`${viewsDirectory}/create`, {title, parentPageTitle});
-};
+        Category.findAll({attributes: dataColumns})
+            .then(data => {
+                return response.render(`${this.viewsDirectory}/list`, {dataColumns, data, title, parentPageTitle: this.parentPageTitle});
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-exports.store = (request, response) => {
+    create(request, response) {
+        const title = 'Create';
+        return response.render(`${this.viewsDirectory}/create`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-};
+    store(request, response) {
 
-exports.view = (request, response) => {
-    const title = 'View';
-    return response.render(`${viewsDirectory}/view`, {title, parentPageTitle});
-};
+    }
 
-exports.edit = (request, response) => {
-    const title = 'Edit';
-    return response.render(`${viewsDirectory}/edit`, {title, parentPageTitle});
-};
+    view(request, response) {
+        const title = 'View';
+        return response.render(`${this.viewsDirectory}/view`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-exports.update = (request, response) => {
+    edit(request, response) {
+        const title = 'Edit';
+        return response.render(`${this.viewsDirectory}/edit`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-};
+    update(request, response) {
 
-exports.delete = (request, response) => {
+    }
 
-};
+    delete(request, response) {
+
+    }
+}
+
+module.exports = new CategoryController;

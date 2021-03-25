@@ -1,37 +1,43 @@
-const modelPath = pathGenerator.modelPath;
-const Tag = require(modelPath('Tag'));
+const Controller = require(pathGenerator.controllerPath('Controller'));
+const Tag = require(pathGenerator.modelPath('Tag'));
 
-const parentPageTitle = 'Tag';
-const viewsDirectory = 'admin/tag';
+class TagController extends Controller {
 
-exports.list = (request, response) => {
-    const title = 'List';
-    return response.render(`${viewsDirectory}/list`, { title, parentPageTitle });
-};
+    parentPageTitle = 'Tag';
+    viewsDirectory = 'admin/tag';
 
-exports.create = (request, response) => {
-    const title = 'Create';
-    return response.render(`${viewsDirectory}/create`, { title, parentPageTitle });
-};
+    // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will work on that later
+    list(request, response) {
+        const title = 'List';
+        return response.render(`${this.viewsDirectory}/list`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-exports.store = (request, response) => {
+    create(request, response) {
+        const title = 'Create';
+        return response.render(`${this.viewsDirectory}/create`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-};
+    store(request, response) {
 
-exports.view = (request, response) => {
-    const title = 'View';
-    return response.render(`${viewsDirectory}/view`, { title, parentPageTitle });
-};
+    }
 
-exports.edit = (request, response) => {
-    const title = 'Edit';
-    return response.render(`${viewsDirectory}/edit`, { title, parentPageTitle });
-};
+    view(request, response) {
+        const title = 'View';
+        return response.render(`${this.viewsDirectory}/view`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-exports.update = (request, response) => {
+    edit(request, response) {
+        const title = 'Edit';
+        return response.render(`${this.viewsDirectory}/edit`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-};
+    update(request, response) {
 
-exports.delete = (request, response) => {
+    }
 
-};
+    delete(request, response) {
+
+    }
+}
+
+module.exports = new TagController;

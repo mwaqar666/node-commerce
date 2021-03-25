@@ -1,20 +1,18 @@
 const Controller = require(pathGenerator.controllerPath('Controller'));
-const Product = require(pathGenerator.modelPath('Product'));
+const ProductAttribute = require(pathGenerator.modelPath('ProductAttribute'));
 const utils = require(pathGenerator.utilsPath('utils'));
 
-class ProductController extends Controller {
+class ProductAttributeController extends Controller {
 
-    parentPageTitle = 'Product';
-    viewsDirectory = 'admin/product';
+    parentPageTitle = 'ProductAttribute';
+    viewsDirectory = 'admin/product-attribute';
 
     // file deepcode ignore NoRateLimitingForExpensiveWebOperation: Will take care of that later
     list(request, response) {
         const title = 'List';
-        const dataColumns = ['id', 'name', 'regularPrice', 'discountPrice', 'quantity', 'image', 'featured', 'sale', 'status'];
+        const dataColumns = [];
 
-        Product.findAll({
-            attributes: dataColumns,
-        })
+        ProductAttribute.findAll({attributes: dataColumns})
             .then(data => {
                 return response.render(`${this.viewsDirectory}/list`, {dataColumns, data, title, parentPageTitle: this.parentPageTitle});
             })
@@ -29,14 +27,14 @@ class ProductController extends Controller {
     }
 
     store(request, response) {
-        const product = request.body;
-        delete product.files;
-        product.slug = utils.createSlug(product.name);
+        const productAttribute = request.body;
+        delete productAttribute.files;
+        productAttribute.slug = utils.createSlug(productAttribute.name);
 
-        Product.create(product)
+        ProductAttribute.create(productAttribute)
             .then(() => {
                 return response.redirect(
-                    this.redirectRoute('admin.products.list').path
+                    this.redirectRoute('admin.product-attributes.list').path
                 );
             })
             .catch(error => {
@@ -47,7 +45,7 @@ class ProductController extends Controller {
     view(request, response) {
         const title = 'View';
 
-        Product.findOne({
+        ProductAttribute.findOne({
             where: {
                 id: request.params.product,
             },
@@ -63,7 +61,7 @@ class ProductController extends Controller {
     edit(request, response) {
         const title = 'Edit';
 
-        Product.findOne({
+        ProductAttribute.findOne({
             where: {
                 id: request.params.product,
             },
@@ -81,14 +79,14 @@ class ProductController extends Controller {
         delete updatedProduct._method;
         delete updatedProduct.files;
 
-        Product.update(updatedProduct, {
+        ProductAttribute.update(updatedProduct, {
             where: {
                 id: request.params.product,
             },
         })
             .then(() => {
                 return response.redirect(
-                    this.redirectRoute('admin.products.list').path
+                    this.redirectRoute('admin.product-attributes.list').path
                 );
             })
             .catch(error => {
@@ -97,12 +95,12 @@ class ProductController extends Controller {
     }
 
     delete(request, response) {
-        Product.destroy({
+        ProductAttribute.destroy({
             where: {id: request.params.product},
         })
             .then(() => {
                 return response.redirect(
-                    this.redirectRoute('admin.products.list').path
+                    this.redirectRoute('admin.product-attributes.list').path
                 );
             })
             .catch(error => {
@@ -111,4 +109,4 @@ class ProductController extends Controller {
     }
 }
 
-module.exports = new ProductController();
+module.exports = new ProductAttributeController;
