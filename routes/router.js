@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const expressRouter = express.Router();
 const utils = require(pathGenerator.utilsPath('utils'));
 
 // Application & Admin Routes
@@ -8,15 +8,26 @@ const adminRoutes = require('./admin-routes');
 
 class Router {
 
+    rawRoutes = [];
+    parsedRoutes = [];
     controllerInstances = {};
 
-    /**
-     * 1) This method is responsible for recursively creating routes from the original
-     * routes array that contain nested prefix groups. This is a recursive method
-     * that looks for prefixed group routes deep inside the object and respectively
-     * applies the prefix path & prefix names to created a single dimensional route
-     * array
-     */
+    constructor(rawRoutes) {
+        this.rawRoutes = rawRoutes;
+        this.createParsedRoutes();
+    }
+
+    createParsedRoutes() {
+        this.rawRoutes = this.rawRoutes.map(route => {
+            if (!!route.prefix) {
+                return this.parsePrefixedRoutes(route.routes, utils.trim(route.prefix, '/'), utils.trim(route.as, '.'), utils.trim(route.namespace, '/'));
+            }
+
+            route.action = this.routeToControllerMethod(route.action);
+            return route;
+        });
+    }
+
     parsePrefixedRoutes(prefixedRoutesArray, prefixPathArray, prefixNameArray, prefixNamespaceArray) {
 
         prefixPathArray = !Array.isArray(prefixPathArray) ? [prefixPathArray] : [...prefixPathArray];
@@ -25,7 +36,7 @@ class Router {
 
         return prefixedRoutesArray.map(prefixedRoute => {
             if (!!prefixedRoute.prefix) {
-                return parsePrefixedRoutes(
+                return this.parsePrefixedRoutes(
                     prefixedRoute.routes,
                     [...prefixPathArray, utils.trim(prefixedRoute.prefix, '/')],
                     [...prefixNameArray, utils.trim(prefixedRoute.as, '.')],
@@ -39,41 +50,45 @@ class Router {
                 path: `/${prefixPath ? `${prefixPath}/` : ``}${utils.trim(prefixedRoute.path, '/')}`,
                 method: prefixedRoute.method,
                 name: `${prefixNameArray.join('.')}.${utils.trim(prefixedRoute.name, '.')}`,
-                action: routeToControllerMethod(prefixedRoute.action, prefixNamespaceArray),
+                action: this.routeToControllerMethod(prefixedRoute.action, prefixNamespaceArray),
             };
         });
     }
 
-    /**
-     * 2) Gets the function signature from the string "controller@method" from
-     * route action. Also applies namespace if necessary
-     */
     routeToControllerMethod(routeAction, namespace = '') {
         const [controller, method] = routeAction.split('@');
-        const controllerPath = pathGenerator.controllerPath(`${!!namespace ? `${namespace}/` : ``}${controller}`);
 
         if (Array.isArray(namespace)) {
             namespace = namespace.join('/');
         }
 
-        return require(pathGenerator.controllerPath(`${!!namespace ? `${namespace}/` : ``}${controller}`))[method];
+        const controllerInstance = this.getControllerInstance(
+            pathGenerator.controllerPath(`${!!namespace ? `${namespace}/` : ``}${controller}`)
+        )
+
+        return controllerInstance[method];
     }
 
-    /**
-     * 3) Gets the instances of the controllers which routes point to from
-     * "controllerInstances" storage. If the instance is present, return the
-     * same instance, otherwise get the instance and store it for future use
-     */
     getControllerInstance(controllerPath) {
+        let controllerInstance = this.controllerInstances[controllerPath];
 
+        if (!!controllerInstance) {
+            return controllerInstance;
+        }
+
+        controllerInstance = require(controllerPath);
+        this.controllerInstances[controllerPath] = controllerInstance;
+        return controllerInstance;
     }
 
-    /**
-     * 4) Apply parameters and query string to generate dynamic routes.
-     * If user provides a dynamic URL portion of route which is not present
-     * on the URL, then an error is thrown. Similarly, if user didn't provide
-     * a required dynamic portion of a URL, then an error will also be thrown.
-     */
+    getParsedRoutes() {
+
+        console.log(this.controllerInstances);
+        console.log(this.parsedRoutes.flat(Infinity));
+
+        return this.parsedRoutes.flat(Infinity);
+    }
+
     applyParameters(path, routeParams, queryParams) {
 
         // Apply URL Required Parameters
@@ -104,11 +119,6 @@ class Router {
         return path;
     }
 
-    /**
-     * 5) Get query parameters as key value pair from a URL.
-     * If no query param is present on the URL, return an
-     * empty object
-     */
     getQueryParams(URL) {
         const queryParams = {};
         const queries = URL.split('?')[1];
@@ -122,10 +132,6 @@ class Router {
         return queryParams;
     }
 
-    /**
-     * 6) Get route object from parsed routes array by matching the URL.
-     * If not found, return false
-     */
     getRouteByURL(URL) {
         const segmentedURL = URL.split('/').filter(urlSegment => !!urlSegment);
         const segmentedRoutesArray = routes.map(registeredRoute => registeredRoute.path.split('/').filter(pathSegment => !!pathSegment));
@@ -153,10 +159,6 @@ class Router {
         return false;
     }
 
-    /**
-     * 7) Method to get specific route from route name.
-     * If no route is found then an error will be thrown
-     */
     getRouteByName(name, routeParams = {}, queryParams = {}) {
         let requiredRoute = { ...routes.find(inspectedRoute => inspectedRoute.name === name) };
         if (Object.keys(requiredRoute).length) {
@@ -168,25 +170,17 @@ class Router {
     }
 }
 
-const routes = [...appRoutes, ...adminRoutes].map(route => {
-    if (!!route.prefix) {
-        return parsePrefixedRoutes(route.routes, utils.trim(route.prefix, '/'), utils.trim(route.as, '.'), utils.trim(route.namespace, '/'));
-    }
-
-    route.action = routeToControllerMethod(route.action);
-    return route;
-}).flat(Infinity);
-
-console.log(routes);
+const router = new Router([...appRoutes, ...adminRoutes]);
+const routes = router.getParsedRoutes();
 
 // Register routes in Express
 routes.forEach(route => {
-    router[route.method](route.path, route.action);
+    expressRouter[route.method](route.path, route.action);
 });
 
 // Module Exports
 exports.routes = routes;
-exports.router = router;
+exports.router = expressRouter;
 exports.getRouteByURL = getRouteByURL;
 exports.getRouteByName = getRouteByName;
 exports.getQueryParams = getQueryParams;
