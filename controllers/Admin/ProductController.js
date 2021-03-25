@@ -1,120 +1,151 @@
 const {Op} = require('sequelize');
-const modelPath = pathGenerator.modelPath;
-const {redirectRoute} = require(pathGenerator.controllerPath('Controller'));
-const Product = require(modelPath('Product'));
-const {createSlug} = require(pathGenerator.utilsPath('utils'));
+const Controller = require(pathGenerator.controllerPath('Controller'));
+const Product = require(pathGenerator.modelPath('Product'));
+const utils = require(pathGenerator.utilsPath('utils'));
 
-const parentPageTitle = 'Product';
-const viewsDirectory = 'admin/product';
+class ProductController extends Controller {
 
-exports.list = (request, response) => {
-    const title = 'List';
-    const dataColumns = ['id', 'name', 'regularPrice', 'discountPrice', 'quantity', 'image', 'featured', 'sale', 'status'];
+    parentPageTitle = 'Product';
+    viewsDirectory = 'admin/product';
 
-    Product.findAll({
-        attributes: dataColumns,
-    })
-        .then(data => {
-            return response.render(`${viewsDirectory}/list`, {dataColumns, data, title, parentPageTitle});
+    list(request, response) {
+        const title = 'List';
+        const dataColumns = ['id', 'name', 'regularPrice', 'discountPrice', 'quantity', 'image', 'featured', 'sale', 'status'];
+
+        Product.findAll({
+            attributes: dataColumns,
         })
-        .catch(error => {
-            console.log(error);
-        });
-};
+            .then(data => {
+                return response.render(`${this.viewsDirectory}/list`, {dataColumns, data, title, parentPageTitle: this.parentPageTitle});
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-exports.create = (request, response) => {
-    const title = 'Create';
-    return response.render(`${viewsDirectory}/create`, {title, parentPageTitle});
-};
+    create(request, response) {
+        const title = 'Create';
+        return response.render(`${this.viewsDirectory}/create`, {title, parentPageTitle: this.parentPageTitle});
+    }
 
-exports.store = (request, response) => {
-    const product = request.body;
-    delete product.files;
-    product.slug = createSlug(product.name);
+    store(request, response) {
+        const product = request.body;
+        delete product.files;
+        product.slug = utils.createSlug(product.name);
 
-    Product.create(product)
-        .then(() => {
-            return response.redirect(
-                redirectRoute('admin.products.list').path
-            );
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
+        Product.create(product)
+            .then(() => {
+                return response.redirect(
+                    this.redirectRoute('admin.products.list').path
+                );
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-exports.view = (request, response) => {
-    const title = 'View';
+    view(request, response) {
+        const title = 'View';
 
-    Product.findOne({
-        where: {
-            id: {
-                [Op.eq]: request.params.product,
+        Product.findOne({
+            where: {
+                id: {
+                    [Op.eq]: request.params.product,
+                },
             },
-        },
-    })
-        .then(product => {
-            return response.render(`${viewsDirectory}/view`, {product, title, parentPageTitle});
         })
-        .catch(error => {
-            console.log(error);
-        });
-};
+            .then(product => {
+                return response.render(`${this.viewsDirectory}/view`, {product, title, parentPageTitle: this.parentPageTitle});
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-exports.edit = (request, response) => {
-    const title = 'Edit';
+    edit(request, response) {
+        const title = 'Edit';
 
-    Product.findOne({
-        where: {
-            id: {
-                [Op.eq]: request.params.product,
+        Product.findOne({
+            where: {
+                id: {
+                    [Op.eq]: request.params.product,
+                },
             },
-        },
-    })
-        .then(product => {
-            return response.render(`${viewsDirectory}/edit`, {product, title, parentPageTitle});
         })
-        .catch(error => {
-            console.log(error);
-        });
-};
+            .then(product => {
+                return response.render(`${this.viewsDirectory}/edit`, {product, title, parentPageTitle: this.parentPageTitle});
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-exports.update = (request, response) => {
-    const updatedProduct = request.body;
-    delete updatedProduct._method;
-    delete updatedProduct.files;
+    update(request, response) {
+        const updatedProduct = request.body;
+        delete updatedProduct._method;
+        delete updatedProduct.files;
 
-    Product.update(updatedProduct, {
-        where: {
-            id: {
-                [Op.eq]: request.params.product,
+        Product.update(updatedProduct, {
+            where: {
+                id: {
+                    [Op.eq]: request.params.product,
+                },
             },
-        },
-    })
-        .then(() => {
-            return response.redirect(
-                redirectRoute('admin.products.list').path
-            );
         })
-        .catch(error => {
-            console.log(error);
-        });
-};
+            .then(() => {
+                return response.redirect(
+                    this.redirectRoute('admin.products.list').path
+                );
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-exports.delete = (request, response) => {
-    Product.destroy({
-        where: {
-            id: {
-                [Op.eq]: request.params.product,
+    delete(request, response) {
+        Product.destroy({
+            where: {
+                id: {
+                    [Op.eq]: request.params.product,
+                },
             },
-        },
-    })
-        .then(() => {
-            return response.redirect(
-                redirectRoute('admin.products.list').path
-            );
         })
-        .catch(error => {
-            console.log(error);
-        });
-};
+            .then(() => {
+                return response.redirect(
+                    this.redirectRoute('admin.products.list').path
+                );
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+}
+
+// exports.list = (request, response) => {
+//
+// };
+//
+// exports.create = (request, response) => {
+//
+// };
+//
+// exports.store = (request, response) => {
+//
+// };
+//
+// exports.view = (request, response) => {
+//
+// };
+//
+// exports.edit = (request, response) => {
+//
+// };
+//
+// exports.update = (request, response) => {
+//
+// };
+//
+// exports.delete = (request, response) => {
+//
+// };
+module.exports = ProductController;

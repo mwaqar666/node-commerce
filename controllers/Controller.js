@@ -1,3 +1,9 @@
-exports.redirectRoute = (name, routeParams = {}, queryParams = {}) => {
-    return require(pathGenerator.routePath('router')).getRouteByName(name, routeParams, queryParams);
-};
+const utils = require(pathGenerator.routePath('router'));
+
+class Controller {
+    redirectRoute(name, routeParams = {}, queryParams = {}) {
+        return utils.getRouteByName(name, routeParams, queryParams);
+    }
+}
+
+module.exports = Controller;
