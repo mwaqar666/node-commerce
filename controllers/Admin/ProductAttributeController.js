@@ -1,6 +1,6 @@
 const Controller = require(pathGenerator.controllerPath('Controller'));
 const ProductAttribute = require(pathGenerator.modelPath('ProductAttribute'));
-const utils = require(pathGenerator.utilsPath('utils'));
+const utils = require(pathGenerator.utilsPath('general-utils'));
 
 class ProductAttributeController extends Controller {
 

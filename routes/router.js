@@ -1,6 +1,6 @@
 const express = require('express');
 const expressRouter = express.Router();
-const utils = require(pathGenerator.utilsPath('utils'));
+const utils = require(pathGenerator.utilsPath('general-utils'));
 
 // Application & Admin Routes
 const appRoutes = require('./app-routes');
@@ -10,11 +10,11 @@ class Router {
 
     rawRoutes = [];
     parsedRoutes = [];
+    expressRouter = expressRouter;
     controllerInstances = {};
 
     constructor(rawRoutes) {
         this.rawRoutes = rawRoutes;
-        this.createParsedRoutes();
     }
 
     createParsedRoutes() {
@@ -26,6 +26,8 @@ class Router {
             route.action = this.routeToControllerMethod(route.action);
             return route;
         }).flat(Infinity);
+
+        return this;
     }
 
     parsePrefixedRoutes(prefixedRoutesArray, prefixPathArray, prefixNameArray, prefixNamespaceArray) {
@@ -82,106 +84,21 @@ class Router {
         return controllerInstance;
     }
 
+    registerRoutes() {
+        this.parsedRoutes.forEach(route => {
+            this.expressRouter[route.method](route.path, route.action);
+        });
+
+        return this;
+    }
+
+    getExpressRouter() {
+        return this.expressRouter;
+    }
+
     getParsedRoutes() {
-
-        console.log(this.controllerInstances);
-        console.log(this.parsedRoutes.flat(Infinity));
-
-        return this.parsedRoutes.flat(Infinity);
-    }
-
-    applyParameters(path, routeParams, queryParams) {
-
-        // Apply URL Required Parameters
-        if (Object.keys(routeParams).length !== 0) {
-            for (const [param, value] of Object.entries(routeParams)) {
-                if (path.search(`:${param}`) === -1) {
-                    throw new Error(`Route parameter '${param}' not found in route "${path}"`);
-                }
-                path = path.replace(`:${param}`, value);
-            }
-        }
-
-        // Check If Required Route Parameter Remains Unfilled
-        const notMatchedParameter = path.substring(
-            path.indexOf(':') + 1, path.indexOf('/', path.indexOf(':')) === -1 ? path.length : path.indexOf('/', path.indexOf(':'))
-        );
-
-        if (notMatchedParameter) {
-            throw new Error(`Route parameter ':${notMatchedParameter}' is undefined`);
-        }
-
-        // Apply URL Query Parameters
-        const queryParamsFirstIndexParam = Object.keys(queryParams)[0];
-        for (const [param, value] of Object.entries(queryParams)) {
-            path += `${param === queryParamsFirstIndexParam ? '?' : '&'}${param}=${value}`;
-        }
-
-        return path;
-    }
-
-    getQueryParams(URL) {
-        const queryParams = {};
-        const queries = URL.split('?')[1];
-        if (queries) {
-            queries.split('&').forEach(queryParam => {
-                queryParam = queryParam.split('=');
-                queryParams[queryParam[0]] = queryParam[1];
-            });
-        }
-
-        return queryParams;
-    }
-
-    getRouteByURL(URL) {
-        const segmentedURL = URL.split('/').filter(urlSegment => !!urlSegment);
-        const segmentedRoutesArray = routes.map(registeredRoute => registeredRoute.path.split('/').filter(pathSegment => !!pathSegment));
-
-        for (const [index, segmentedRoute] of Object.entries(segmentedRoutesArray)) {
-            if (segmentedRoute.length === segmentedURL.length) {
-
-                let matchedSegments = 0;
-                for (let segmentIndex = 0; segmentIndex < segmentedRoute.length; segmentIndex++) {
-                    if (
-                        segmentedRoute[segmentIndex].startsWith(':')
-                        ||
-                        segmentedRoute[segmentIndex] === segmentedURL[segmentIndex]
-                    ) {
-                        matchedSegments++;
-                    }
-                }
-
-                if (matchedSegments === segmentedRoute.length) {
-                    return routes[index];
-                }
-            }
-        }
-
-        return false;
-    }
-
-    getRouteByName(name, routeParams = {}, queryParams = {}) {
-        let requiredRoute = { ...routes.find(inspectedRoute => inspectedRoute.name === name) };
-        if (Object.keys(requiredRoute).length) {
-            requiredRoute.path = applyParameters(requiredRoute.path, routeParams, queryParams);
-            return requiredRoute;
-        }
-
-        throw new Error(`Route with name '${name}' is not found`);
+        return this.parsedRoutes;
     }
 }
 
-const router = new Router([...appRoutes, ...adminRoutes]);
-const routes = router.getParsedRoutes();
-
-// Register routes in Express
-routes.forEach(route => {
-    expressRouter[route.method](route.path, route.action);
-});
-
-// Module Exports
-exports.routes = routes;
-exports.router = expressRouter;
-exports.getRouteByURL = getRouteByURL;
-exports.getRouteByName = getRouteByName;
-exports.getQueryParams = getQueryParams;
+module.exports = new Router([...appRoutes, ...adminRoutes]);

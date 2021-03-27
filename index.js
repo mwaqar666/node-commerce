@@ -5,7 +5,10 @@ const bodyParser = require('body-parser');
 
 // Custom Code Modules ( Router, Utilities etc... )
 global.pathGenerator = require('./utils/path');
-const utils = require(pathGenerator.utilsPath('utils'));
+
+const generalUtils = require(pathGenerator.utilsPath('general-utils'));
+const expressUtils = require(pathGenerator.utilsPath('express-utils'));
+const routerUtils = require(pathGenerator.utilsPath('router-utils'));
 const router = require(pathGenerator.routePath('router'));
 const sequelize = require(pathGenerator.utilsPath('database'));
 
@@ -22,22 +25,24 @@ app.set('view engine', 'njk');
 app.use('/static', express.static(pathGenerator.publicPath()));
 
 // Override The Request Method With Custom Method If Provided In "_method" Field
-app.use(utils.overrideRequestMethodIfProvidedExplicitly());
+app.use(expressUtils.overrideRequestMethodIfProvidedExplicitly());
 
 // Set Some Helper Methods & Variables To Be Used In Views
-app.use(utils.except('/static', (request, response, next) => {
-    response.locals.currentRoute = router.getRouteByURL(request.originalUrl);
-    response.locals.route = router.getRouteByName;
-    response.locals.getRoute = router.getRouteByURL;
-    response.locals.getQueryParams = router.getQueryParams;
-    response.locals.convertCase = utils.convertCase;
-    response.locals._method = utils._method;
+app.use(
+    expressUtils.except('/static', (request, response, next) => {
+        response.locals.currentRoute = routerUtils.getRouteByURL(request.originalUrl);
+        response.locals.route = routerUtils.getRouteByName;
+        response.locals.getRoute = routerUtils.getRouteByURL;
+        response.locals.getQueryParams = routerUtils.getQueryParams;
+        response.locals.convertCase = generalUtils.convertCase;
+        response.locals._method = generalUtils._method;
 
-    next();
-}));
+        next();
+    })
+);
 
 // Use Router
-app.use(router.router);
+app.use(router.createParsedRoutes().registerRoutes().getExpressRouter());
 
 // Synchronize Database & Run The Application
 sequelize.sync({ force: true })

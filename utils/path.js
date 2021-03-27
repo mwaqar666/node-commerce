@@ -1,5 +1,5 @@
 const path = require('path');
-const utils = require('./utils');
+const utils = require('./general-utils');
 
 const constructPath = directoryPath => {
     directoryPath = utils.trim(directoryPath, '/', true);
