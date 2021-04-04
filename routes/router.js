@@ -8,14 +8,10 @@ const adminRoutes = require('./admin-routes');
 
 class Router {
 
-    rawRoutes = [];
+    rawRoutes = [...appRoutes, ...adminRoutes];
     parsedRoutes = [];
     expressRouter = expressRouter;
     controllerInstances = {};
-
-    constructor(rawRoutes) {
-        this.rawRoutes = rawRoutes;
-    }
 
     createParsedRoutes() {
         this.parsedRoutes = this.rawRoutes.map(route => {
@@ -101,4 +97,4 @@ class Router {
     }
 }
 
-module.exports = new Router([...appRoutes, ...adminRoutes]);
+module.exports = new Router();
