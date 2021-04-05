@@ -51,6 +51,8 @@ class Application {
             value: new Path(this.dependencies.core.path),
         });
 
+        global.pathGenerator = this.dependencies.pathVariable;
+
         return this;
     }
 
