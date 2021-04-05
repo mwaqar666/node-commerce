@@ -1,5 +1,4 @@
-const adminRoutes = [
-
+module.exports = [
     {
         prefix: '/admin', as: 'admin', namespace: 'Admin', routes: [
 
@@ -73,5 +72,3 @@ const adminRoutes = [
         ],
     },
 ];
-
-module.exports = adminRoutes;

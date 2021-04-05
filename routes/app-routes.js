@@ -1,4 +1,4 @@
-const appRoutes = [
+module.exports = [
 
     {
         prefix: '/', as: 'app', namespace: 'App', routes: [
@@ -55,5 +55,3 @@ const appRoutes = [
         ],
     },
 ];
-
-module.exports = appRoutes;

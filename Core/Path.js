@@ -42,7 +42,7 @@ class Path {
     getPath(...args) {
         return this.constructPath(
             this.path.join(
-                this.baseDirectoryRoots[args[0]], ...this.sanitizePathString(args[1])
+                this.baseDirectoryRoots[args[0]], ...this.sanitizePathString(args[1] ?? '')
             )
         );
     }

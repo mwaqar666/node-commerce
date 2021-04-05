@@ -1,22 +1,30 @@
-const express = require('express');
-const expressRouter = express.Router();
-const utils = require(pathGenerator.utilsPath('general-utils'));
-
-// Application & Admin Routes
-const appRoutes = require('./app-routes');
-const adminRoutes = require('./admin-routes');
-
+// noinspection JSUnresolvedFunction
 class Router {
 
-    rawRoutes = [...appRoutes, ...adminRoutes];
-    parsedRoutes = [];
-    expressRouter = expressRouter;
     controllerInstances = {};
 
+    constructor(fs, pathVariable, expressInstance, generalUtilities) {
+        this.fs = fs;
+        this.pathVariable = pathVariable;
+        this.expressRouter = expressInstance.Router();
+        this.generalUtilities = generalUtilities;
+        this.expressRouterIsConfigured = false;
+        this.obtainRoutes();
+    }
+
     createParsedRoutes() {
+        if (this.parsedRoutes) {
+            return this;
+        }
+
         this.parsedRoutes = this.rawRoutes.map(route => {
             if (!!route.prefix) {
-                return this.parsePrefixedRoutes(route.routes, utils.trim(route.prefix, '/'), utils.trim(route.as, '.'), utils.trim(route.namespace, '/'));
+                return this.parsePrefixedRoutes(
+                    route.routes,
+                    this.generalUtilities.trim(route.prefix, '/'),
+                    this.generalUtilities.trim(route.as, '.'),
+                    this.generalUtilities.trim(route.namespace, '/')
+                );
             }
 
             route.action = this.routeToControllerMethod(route.action);
@@ -36,18 +44,18 @@ class Router {
             if (!!prefixedRoute.prefix) {
                 return this.parsePrefixedRoutes(
                     prefixedRoute.routes,
-                    [...prefixPathArray, utils.trim(prefixedRoute.prefix, '/')],
-                    [...prefixNameArray, utils.trim(prefixedRoute.as, '.')],
-                    [...prefixNamespaceArray, utils.trim(prefixedRoute.namespace, '/')]
+                    [...prefixPathArray, this.generalUtilities.trim(prefixedRoute.prefix, '/')],
+                    [...prefixNameArray, this.generalUtilities.trim(prefixedRoute.as, '.')],
+                    [...prefixNamespaceArray, this.generalUtilities.trim(prefixedRoute.namespace, '/')]
                 );
             }
 
             let prefixPath = prefixPathArray.join('/');
 
             return {
-                path: `/${prefixPath ? `${prefixPath}/` : ``}${utils.trim(prefixedRoute.path, '/')}`,
+                path: `/${prefixPath ? `${prefixPath}/` : ``}${this.generalUtilities.trim(prefixedRoute.path, '/')}`,
                 method: prefixedRoute.method,
-                name: `${prefixNameArray.join('.')}.${utils.trim(prefixedRoute.name, '.')}`,
+                name: `${prefixNameArray.join('.')}.${this.generalUtilities.trim(prefixedRoute.name, '.')}`,
                 action: this.routeToControllerMethod(prefixedRoute.action, prefixNamespaceArray),
             };
         });
@@ -61,7 +69,7 @@ class Router {
         }
 
         const controllerInstance = this.getControllerInstance(
-            pathGenerator.controllerPath(`${!!namespace ? `${namespace}/` : ``}${controller}`)
+            this.pathVariable.getControllerPath(`${!!namespace ? `${namespace}/` : ``}${controller}`)
         )
 
         return controllerInstance[method];
@@ -80,21 +88,51 @@ class Router {
         return controllerInstance;
     }
 
+    obtainRoutes() {
+        this.rawRoutes = this.fs.readdirSync(
+            this.pathVariable.getRoutePath()
+        ).map(file => {
+            return require(this.pathVariable.getRoutePath(file));
+        }).flat(Infinity);
+    }
+
     registerRoutes() {
+        if (this.expressRouterIsConfigured) {
+            return this;
+        }
+
         this.parsedRoutes.forEach(route => {
             this.expressRouter[route.method](route.path, route.action);
         });
+        this.expressRouterIsConfigured = ! this.expressRouterIsConfigured;
 
         return this;
     }
 
     getExpressRouter() {
+        if (! this.expressRouterIsConfigured) {
+            this.registerRoutes();
+        }
+
         return this.expressRouter;
     }
 
     getParsedRoutes() {
+        if (! this.parsedRoutes) {
+            this.createParsedRoutes();
+        }
+
         return this.parsedRoutes;
     }
 }
 
-module.exports = new Router();
+module.exports = new Proxy(Router, {
+    construct(target, argArray) {
+        if (this.instance) {
+            return this.instance;
+        }
+
+        this.instance = new target(...argArray);
+        return this.instance;
+    }
+});
