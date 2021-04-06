@@ -3,13 +3,14 @@ class Router {
 
     controllerInstances = {};
 
-    constructor(fs, pathVariable, expressInstance, generalUtilities) {
+    constructor(fs, pathVariable, expressInstance, generalUtilities, coreDependentUtils) {
         this.fs = fs;
         this.pathVariable = pathVariable;
         this.expressRouter = expressInstance.Router();
         this.generalUtilities = generalUtilities;
         this.expressRouterIsConfigured = false;
-        this.obtainRoutes();
+        this.coreDependentUtils = coreDependentUtils;
+        this.loadRoutes();
     }
 
     createParsedRoutes() {
@@ -88,12 +89,10 @@ class Router {
         return controllerInstance;
     }
 
-    obtainRoutes() {
-        this.rawRoutes = this.fs.readdirSync(
+    loadRoutes() {
+        this.rawRoutes = this.coreDependentUtils.readFilesFromDirectory(
             this.pathVariable.getRoutePath()
-        ).map(file => {
-            return require(this.pathVariable.getRoutePath(file));
-        }).flat(Infinity);
+        ).map(routeFile => require(routeFile)).flat(Infinity);
     }
 
     registerRoutes() {
@@ -104,6 +103,7 @@ class Router {
         this.parsedRoutes.forEach(route => {
             this.expressRouter[route.method](route.path, route.action);
         });
+
         this.expressRouterIsConfigured = ! this.expressRouterIsConfigured;
 
         return this;

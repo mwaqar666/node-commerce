@@ -1,9 +1,12 @@
 'use strict';
 
 const Path = require('./Path');
-const ExpressUtilities = require('./Utilities/Express-Utilities');
-const GeneralUtilities = require('./Utilities/General-Utilities');
-const RouterUtilities = require('./Utilities/Router-Utilities');
+const ExpressUtilities = require('./Utilities/ExpressUtilities');
+const GeneralUtilities = require('./Utilities/GeneralUtilities');
+const CoreDependentUtilities = require('./Utilities/CoreDependentUtilities');
+const RouterUtilities = require('./Utilities/RouterUtilities');
+const Database = require('./Database');
+const Model = require('./Model');
 const Router = require('./Router');
 
 // noinspection JSUnresolvedVariable,JSUnresolvedFunction
@@ -15,15 +18,17 @@ class Application {
 
     initializeApplication() {
         this
-            .initiateCore()
-            .initiateThirdPartyPackages()
-            .initiatePathVariable()
-            .initiateUtilities()
-            .initiateRouter()
-            .initiateRouterUtilities();
+            .loadCorePackages()
+            .loadThirdPartyPackages()
+            .loadPathConstructor()
+            .loadUtilities()
+            .loadDatabase()
+            .loadModels()
+            /*.loadControllers()*/
+            /*.loadRouter()*/;
     }
 
-    initiateCore() {
+    loadCorePackages() {
         Object.defineProperty(this.dependencies, 'core', {
             value: {
                 fs: require('fs'),
@@ -34,11 +39,12 @@ class Application {
         return this;
     }
 
-    initiateThirdPartyPackages() {
+    loadThirdPartyPackages() {
         Object.defineProperty(this.dependencies, 'thirdParty', {
             value: {
                 express: require('express'),
                 nunjucks: require('nunjucks'),
+                sequelize: require('sequelize'),
                 bodyParser: require('body-parser'),
             },
         });
@@ -46,7 +52,7 @@ class Application {
         return this;
     }
 
-    initiatePathVariable() {
+    loadPathConstructor() {
         Object.defineProperty(this.dependencies, 'pathVariable', {
             value: new Path(this.dependencies.core.path),
         });
@@ -56,21 +62,48 @@ class Application {
         return this;
     }
 
-    initiateUtilities() {
+    loadUtilities() {
         Object.defineProperty(this.dependencies, 'utils', {
             value: {
                 expressUtils: new ExpressUtilities(),
                 generalUtils: new GeneralUtilities(),
+                coreDependentUtils: new CoreDependentUtilities(
+                    this.dependencies.core.fs, this.dependencies.core.path
+                ),
             },
         });
 
         return this;
     }
 
-    initiateRouter() {
+    loadDatabase() {
+        const database = new Database(this.dependencies.thirdParty.sequelize);
+
+        Object.defineProperty(this.dependencies, 'database', {
+            value: database.getDatabaseInstance(),
+        });
+
+        return this;
+    }
+
+    loadModels() {
+
+        Object.defineProperty(this.dependencies, 'model', {
+            value: new Model(
+                this.dependencies.thirdParty.sequelize, this.dependencies.database,
+                this.dependencies.utils.coreDependentUtils, this.dependencies.pathVariable
+            ),
+        });
+
+        return this;
+    }
+
+    // This function is still faulty due to Controller Dependencies
+    loadRouter() {
         const routerInstance = new Router(
             this.dependencies.core.fs, this.dependencies.pathVariable,
-            this.dependencies.thirdParty.express, this.dependencies.utils.generalUtils
+            this.dependencies.thirdParty.express, this.dependencies.utils.generalUtils,
+            this.dependencies.utils.coreDependentUtils,
         );
 
         Object.defineProperty(this.dependencies, 'router', {
@@ -80,13 +113,11 @@ class Application {
             },
         });
 
-        return this;
-    }
-
-    initiateRouterUtilities() {
         Object.defineProperty(this.dependencies.utils, 'routerUtils', {
             value: new RouterUtilities(this.dependencies.router.parsedRoutes),
         });
+
+        return this;
     }
 }
 

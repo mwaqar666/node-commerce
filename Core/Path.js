@@ -1,6 +1,13 @@
 class Path {
     baseDirectoryRoots = {
-        controller: 'Controllers', core: 'Core', model: 'Models', public: 'public', route: 'routes', utils: 'utils', view: 'views',
+        root: '/',
+        core: '/Core',
+        view: '/views',
+        utils: '/utils',
+        model: '/Models',
+        route: '/routes',
+        public: '/public',
+        controller: '/Controllers',
     };
 
     constructor(pathPackage) {

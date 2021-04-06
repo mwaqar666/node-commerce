@@ -1,4 +1,5 @@
 class GeneralUtilities {
+
     /**
      * 1) Trim character from start and end of string
      */
@@ -18,7 +19,7 @@ class GeneralUtilities {
         }
 
         return string;
-    };
+    }
 
     /**
      * 2) Segment the string from the provided delimiter. If segment index
@@ -32,7 +33,7 @@ class GeneralUtilities {
         }
 
         return splittedString;
-    };
+    }
 
     /**
      * 3) Javascript implementation of PHP's "ucfirst(str)"
@@ -43,7 +44,7 @@ class GeneralUtilities {
         }
 
         throw new Error('Invalid input');
-    };
+    }
 
     /**
      * 4) Convert String From One Case To Another Case
@@ -96,14 +97,14 @@ class GeneralUtilities {
             }
             return finalResultString;
         }
-    };
+    }
 
     /**
      * 5) Create slug from given name using "-" as default delimiter
      */
     createSlug(string, delimiter = '-') {
         return string.split(' ').filter(word => !!word).map(word => word.trim().toLowerCase()).join(delimiter);
-    };
+    }
 
     /**
      * 6) Shuffle elements of an array
@@ -123,7 +124,7 @@ class GeneralUtilities {
         }
 
         return array;
-    };
+    }
 
     /**
      * 7) Generate array of numbers from lowerBound (inclusive)
@@ -131,7 +132,7 @@ class GeneralUtilities {
      */
     range(upperBound, lowerBound = 0) {
         return [ ...Array(upperBound - lowerBound + 1).keys() ].map(element => element + lowerBound);
-    };
+    }
 
     /**
      * 8) Generate random string of "n" characters
@@ -142,7 +143,7 @@ class GeneralUtilities {
             ...this.range(90, 65),
             ...this.range(57, 48),
         ].shuffle().splice(0, length).map(ASCII => String.fromCharCode(ASCII)).join('');
-    };
+    }
 }
 
 module.exports = new Proxy(GeneralUtilities, {
