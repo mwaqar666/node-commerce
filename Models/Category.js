@@ -1,6 +1,7 @@
 const User = require('./User');
+const Model = require('./Model');
 
-class Category {
+class Category extends Model {
     tableName = 'categories';
 
     attributes = {

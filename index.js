@@ -1,6 +1,6 @@
 const Application = require('./Core/Application');
 const application = new Application();
-application.initializeApplication();
+application.loadApplication();
 
 /**
  * Old Code

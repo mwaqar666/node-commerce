@@ -16,7 +16,7 @@ class Application {
         this.dependencies = {};
     }
 
-    initializeApplication() {
+    loadApplication() {
         this
             .loadCorePackages()
             .loadThirdPartyPackages()
@@ -48,6 +48,8 @@ class Application {
                 bodyParser: require('body-parser'),
             },
         });
+
+        global._Sequelize = this.dependencies.thirdParty.sequelize;
 
         return this;
     }
@@ -87,12 +89,15 @@ class Application {
     }
 
     loadModels() {
+        global.BaseModel = this.dependencies.thirdParty.sequelize.Model;
+
+        const baseModel = new Model (
+            this.dependencies.thirdParty.sequelize, this.dependencies.database,
+            this.dependencies.utils.coreDependentUtils, this.dependencies.pathVariable
+        )
 
         Object.defineProperty(this.dependencies, 'model', {
-            value: new Model(
-                this.dependencies.thirdParty.sequelize, this.dependencies.database,
-                this.dependencies.utils.coreDependentUtils, this.dependencies.pathVariable
-            ),
+            value: 1,
         });
 
         return this;

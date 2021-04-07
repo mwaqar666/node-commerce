@@ -11,9 +11,22 @@ class Model {
     }
 
     loadModels() {
-        this.dbModels = this.coreDependentUtils.readFilesFromDirectory(
-            this.pathVariable.getModelPath(), true
-        ).map(modelFile => require(modelFile));
+        this.loadBaseModel();
+        this.loadUserDefinedModels();
+    }
+
+    loadBaseModel() {
+        this.baseModel = require(this.pathVariable.getModelPath('Model'));
+    }
+
+    loadUserDefinedModels() {
+        this.userDefinedModels = this.baseModel.models.map(model => {
+            model = require(
+                this.pathVariable.getModelPath(model)
+            )
+
+            return model;
+        })
     }
 }
 
