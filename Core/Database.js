@@ -1,14 +1,20 @@
+// noinspection JSUnresolvedFunction
 class Database {
-    constructor(sequelize) {
+    constructor(sequelize, pathVariable) {
         this.sequelize = sequelize;
+        this.pathVariable = pathVariable;
         this.configureDatabase();
     }
 
     configureDatabase() {
-        this.databaseInstance = new this.sequelize.Sequelize('node-commerce', 'root', '', {
-            host: 'localhost',
-            dialect: 'mysql',
-        });
+        const databaseConfig = this.pathVariable.getConfigPath('database');
+
+        this.databaseInstance = new this.sequelize.Sequelize(
+            databaseConfig.database, databaseConfig.username, databaseConfig.password, {
+                host: databaseConfig.host,
+                dialect: 'mysql',
+            }
+        );
     }
 
     getDatabaseInstance() {

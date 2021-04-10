@@ -20,13 +20,30 @@ class Model {
     }
 
     loadUserDefinedModels() {
-        this.userDefinedModels = this.baseModel.models.map(model => {
-            model = require(
+        // this.userDefinedModels = Object.create(null);
+        //
+        // for (const model of Object.values(this.baseModel.registeredModels)) {
+        //     let loadedModel = require(
+        //         this.pathVariable.getModelPath(model)
+        //     );
+        //
+        //     console.log(loadedModel.name);
+        //
+        //     Object.defineProperty(this.userDefinedModels, loadedModel.name, {
+        //         value: new loadedModel(),
+        //         writable: true, enumerable: true,
+        //     });
+        // }
+
+        this.userDefinedModels = this.baseModel.registeredModels.map(model => {
+            let loadedModel = require(
                 this.pathVariable.getModelPath(model)
             )
 
-            return model;
-        })
+            return new loadedModel();
+        });
+
+        console.log(this.userDefinedModels);
     }
 }
 

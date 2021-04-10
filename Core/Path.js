@@ -3,9 +3,9 @@ class Path {
         root: '/',
         core: '/Core',
         view: '/views',
-        utils: '/utils',
         model: '/Models',
         route: '/routes',
+        config: '/config',
         public: '/public',
         controller: '/Controllers',
     };

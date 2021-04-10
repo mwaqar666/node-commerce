@@ -13,73 +13,65 @@ const Router = require('./Router');
 class Application {
 
     constructor() {
-        this.dependencies = {};
-    }
-
-    loadApplication() {
-        this
-            .loadCorePackages()
-            .loadThirdPartyPackages()
-            .loadPathConstructor()
-            .loadUtilities()
-            .loadDatabase()
-            .loadModels()
-            /*.loadControllers()*/
-            /*.loadRouter()*/;
-    }
-
-    loadCorePackages() {
-        Object.defineProperty(this.dependencies, 'core', {
-            value: {
+        this.dependencies = {
+            core: {
                 fs: require('fs'),
                 path: require('path'),
             },
-        });
-
-        return this;
-    }
-
-    loadThirdPartyPackages() {
-        Object.defineProperty(this.dependencies, 'thirdParty', {
-            value: {
+            thirdParty: {
                 express: require('express'),
                 nunjucks: require('nunjucks'),
                 sequelize: require('sequelize'),
                 bodyParser: require('body-parser'),
-            },
-        });
+            }
+        };
+    }
 
-        global._Sequelize = this.dependencies.thirdParty.sequelize;
+    loadApplication() {
+        this
+            .startExpressProcess()
+            .configurePath()
+            .loadUtilities()
+            .configureViewEngine()
+            .loadDatabase()
+            /*.loadModels()*/
+            /*.loadControllers()*/
+            /*.loadRouter()*/;
+    }
 
+    startExpressProcess() {
+        this.expressApp = this.dependencies.thirdParty.express();
         return this;
     }
 
-    loadPathConstructor() {
-        Object.defineProperty(this.dependencies, 'pathVariable', {
-            value: new Path(this.dependencies.core.path),
-        });
-
-        global.pathGenerator = this.dependencies.pathVariable;
-
+    configurePath() {
+        this.dependencies.pathVariable = new Path(this.dependencies.core.path);
         return this;
     }
 
     loadUtilities() {
-        Object.defineProperty(this.dependencies, 'utils', {
-            value: {
-                expressUtils: new ExpressUtilities(),
-                generalUtils: new GeneralUtilities(),
-                coreDependentUtils: new CoreDependentUtilities(
-                    this.dependencies.core.fs, this.dependencies.core.path
-                ),
-            },
-        });
+        this.dependencies.utils = {
+            expressUtils: new ExpressUtilities(),
+            generalUtils: new GeneralUtilities(),
+            coreDependentUtils: new CoreDependentUtilities(
+                this.dependencies.core.fs, this.dependencies.core.path
+            ),
+        };
 
         return this;
     }
 
+    configureViewEngine() {
+        this.dependencies.thirdParty.nunjucks.configure('views', { autoescape: true, express: app });
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.set('view engine', 'njk');
+        app.use('/static', express.static(pathGenerator.publicPath()));
+    }
+
     loadDatabase() {
-        const database = new Database(this.dependencies.thirdParty.sequelize);
+        const database = new Database(
+            this.dependencies.thirdParty.sequelize, this.dependencies.pathVariable
+        );
 
         Object.defineProperty(this.dependencies, 'database', {
             value: database.getDatabaseInstance(),
@@ -89,8 +81,6 @@ class Application {
     }
 
     loadModels() {
-        global.BaseModel = this.dependencies.thirdParty.sequelize.Model;
-
         const baseModel = new Model (
             this.dependencies.thirdParty.sequelize, this.dependencies.database,
             this.dependencies.utils.coreDependentUtils, this.dependencies.pathVariable

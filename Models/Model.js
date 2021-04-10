@@ -1,19 +1,8 @@
 class Model {
-    database =
-
-    models = [
+    static registeredModels = [
         // Register your models here
-        'User', 'Category'
+        'Category', 'User'
     ];
 }
 
-module.exports = new Proxy(Model, {
-    construct(target, argArray) {
-        if (this.instance) {
-            return this.instance;
-        }
-
-        this.instance = new target(...argArray);
-        return this.instance;
-    }
-});
+module.exports = Model;

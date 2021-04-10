@@ -1,10 +1,10 @@
-const User = require('./User');
 const Model = require('./Model');
+const User = require('./User');
 
 class Category extends Model {
     tableName = 'categories';
 
-    attributes = {
+    tableFields = {
         id: {
             type: 'BIGINT.UNSIGNED', primaryKey: true, autoIncrement: true, allowNull: false,
         },

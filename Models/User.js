@@ -1,7 +1,9 @@
-class User {
+const Model = require('./Model');
+
+class User extends Model {
     tableName = 'users';
 
-    attributes = {
+    tableFields = {
         id: {
             type: 'BIGINT.UNSIGNED', primaryKey: true, autoIncrement: true, allowNull: false,
         },
