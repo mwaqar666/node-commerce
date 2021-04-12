@@ -34,9 +34,8 @@ class Application {
             .loadUtilities()
             .configureViewEngine()
             .loadDatabase()
-            /*.loadModels()*/
-            /*.loadControllers()*/
-            /*.loadRouter()*/;
+            .loadModels()
+            // .loadRouter();
     }
 
     startExpressProcess() {
@@ -46,6 +45,9 @@ class Application {
 
     configurePath() {
         this.dependencies.pathVariable = new Path(this.dependencies.core.path);
+
+        global.pathInstance = this.dependencies.pathVariable;
+
         return this;
     }
 
@@ -58,14 +60,18 @@ class Application {
             ),
         };
 
+        global.utilities = this.dependencies.utils;
+
         return this;
     }
 
     configureViewEngine() {
-        this.dependencies.thirdParty.nunjucks.configure('views', { autoescape: true, express: app });
-        app.use(bodyParser.urlencoded({ extended: true }));
-        app.set('view engine', 'njk');
-        app.use('/static', express.static(pathGenerator.publicPath()));
+        this.dependencies.thirdParty.nunjucks.configure('views', { autoescape: true, express: this.expressApp });
+        this.expressApp.use(this.dependencies.thirdParty.bodyParser.urlencoded({ extended: true }));
+        this.expressApp.set('view engine', 'njk');
+        this.expressApp.use('/static', this.dependencies.thirdParty.express.static(this.dependencies.pathVariable.getPublicPath()));
+
+        return this;
     }
 
     loadDatabase() {
@@ -73,44 +79,37 @@ class Application {
             this.dependencies.thirdParty.sequelize, this.dependencies.pathVariable
         );
 
-        Object.defineProperty(this.dependencies, 'database', {
-            value: database.getDatabaseInstance(),
-        });
+        this.dependencies.database = database.getDatabaseInstance();
+
+        global.dbInstance = this.dependencies.database;
+        global.BaseModel = this.dependencies.thirdParty.sequelize.Model;
+        global.DT = this.dependencies.thirdParty.sequelize.DataTypes;
 
         return this;
     }
 
     loadModels() {
-        const baseModel = new Model (
+        const models = new Model(
             this.dependencies.thirdParty.sequelize, this.dependencies.database,
             this.dependencies.utils.coreDependentUtils, this.dependencies.pathVariable
-        )
-
-        Object.defineProperty(this.dependencies, 'model', {
-            value: 1,
-        });
-
-        return this;
+        );
     }
 
     // This function is still faulty due to Controller Dependencies
     loadRouter() {
+
         const routerInstance = new Router(
             this.dependencies.core.fs, this.dependencies.pathVariable,
             this.dependencies.thirdParty.express, this.dependencies.utils.generalUtils,
             this.dependencies.utils.coreDependentUtils,
         );
 
-        Object.defineProperty(this.dependencies, 'router', {
-            value: {
-                parsedRoutes: routerInstance.getParsedRoutes(),
-                configuredExpressRouter: routerInstance.getExpressRouter(),
-            },
-        });
+        this.dependencies.router = {
+            parsedRoutes: routerInstance.getParsedRoutes(),
+            configuredExpressRouter: routerInstance.getExpressRouter(),
+        };
 
-        Object.defineProperty(this.dependencies.utils, 'routerUtils', {
-            value: new RouterUtilities(this.dependencies.router.parsedRoutes),
-        });
+        this.dependencies.utils.routerUtils = new RouterUtilities(this.dependencies.router.parsedRoutes);
 
         return this;
     }

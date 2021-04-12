@@ -1,5 +1,5 @@
-const Controller = require(pathGenerator.controllerPath('Controller'));
-const Category = require(pathGenerator.modelPath('Category'));
+const Controller = require(pathInstance.getControllerPath('Controller'));
+const Category = require(pathInstance.getModelPath('Category'));
 
 class CategoryController extends Controller {
 

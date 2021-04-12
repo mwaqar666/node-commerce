@@ -1,5 +1,5 @@
-const Controller = require(pathGenerator.controllerPath('Controller'));
-const User = require(pathGenerator.modelPath('User'));
+const Controller = require(pathInstance.getControllerPath('Controller'));
+const User = require(pathInstance.getModelPath('User'));
 
 class UserController extends Controller {
 

@@ -1,5 +1,5 @@
-const Controller = require(pathGenerator.controllerPath('Controller'));
-const Currency = require(pathGenerator.modelPath('Currency'));
+const Controller = require(pathInstance.getControllerPath('Controller'));
+const Currency = require(pathInstance.getModelPath('Currency'));
 
 class CurrencyController extends Controller {
 

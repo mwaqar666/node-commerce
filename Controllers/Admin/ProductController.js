@@ -1,6 +1,5 @@
-const Controller = require(pathGenerator.controllerPath('Controller'));
-const Product = require(pathGenerator.modelPath('Product'));
-const utils = require(pathGenerator.utilsPath('general-utils'));
+const Controller = require(pathInstance.getControllerPath('Controller'));
+const Product = require(pathInstance.getModelPath('Product'));
 
 class ProductController extends Controller {
 
@@ -31,7 +30,7 @@ class ProductController extends Controller {
     store(request, response) {
         const product = request.body;
         delete product.files;
-        product.slug = utils.createSlug(product.name);
+        product.slug = utilities.generalUtils.createSlug(product.name);
 
         Product.create(product)
             .then(() => {

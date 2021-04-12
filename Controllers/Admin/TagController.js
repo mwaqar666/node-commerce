@@ -1,5 +1,5 @@
-const Controller = require(pathGenerator.controllerPath('Controller'));
-const Tag = require(pathGenerator.modelPath('Tag'));
+const Controller = require(pathInstance.getControllerPath('Controller'));
+const Tag = require(pathInstance.getModelPath('Tag'));
 
 class TagController extends Controller {
 

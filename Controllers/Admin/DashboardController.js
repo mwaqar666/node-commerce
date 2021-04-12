@@ -1,4 +1,4 @@
-const Controller = require(pathGenerator.controllerPath('Controller'));
+const Controller = require(pathInstance.getControllerPath('Controller'));
 
 class DashboardController extends Controller {
 

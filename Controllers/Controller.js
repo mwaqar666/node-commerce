@@ -1,8 +1,6 @@
-const utils = require(pathGenerator.routePath('router'));
-
 class Controller {
     redirectRoute(name, routeParams = {}, queryParams = {}) {
-        return utils.getRouteByName(name, routeParams, queryParams);
+        return utilities.routerUtils.getRouteByName(name, routeParams, queryParams);
     }
 }
 
