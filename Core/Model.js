@@ -27,8 +27,6 @@ class Model {
     registerModelsWithSequelize() {
         this.userRegisteredModels = this.userDefinedModels.map(userDefinedModel => {
 
-            console.log(userDefinedModel.tableFields)
-
             let modelDefinition = {};
 
             for (const [column, description] of Object.entries(userDefinedModel.tableFields)) {
